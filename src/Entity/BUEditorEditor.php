@@ -62,18 +62,11 @@ class BUEditorEditor extends ConfigEntityBase {
   protected $description;
 
   /**
-   * Toolbar.
+   * Settings.
    *
    * @var array
    */
-  protected $toolbar = array();
-
-  /**
-   * Plugins.
-   *
-   * @var array
-   */
-  protected $plugins = array();
+  protected $settings = array();
 
   /**
    * Javascript data including settings and libraries.
@@ -83,13 +76,10 @@ class BUEditorEditor extends ConfigEntityBase {
   protected $jsData;
 
   /**
-   * Returns a specific setting or all settings of a plugin.
+   * Returns all settings or a specific setting by key.
    */
-  public function getPluginSettings($plugin = NULL, $key = NULL, $default = NULL) {
-    if (!isset($plugin)) {
-      return $this->plugins;
-    }
-    $settings = isset($this->plugins[$plugin]) ? $this->plugins[$plugin] : array();
+  public function getSettings($key = NULL, $default = NULL) {
+    $settings = $this->settings;
     if (isset($key)) {
       return isset($settings[$key]) ? $settings[$key] : $default;
     }
@@ -100,14 +90,14 @@ class BUEditorEditor extends ConfigEntityBase {
    * Returns the toolbar array.
    */
   public function getToolbar() {
-    return $this->toolbar;
+    return $this->getSettings('toolbar', array());
   }
 
   /**
    * Checks if an item exists in the toolbar.
    */
   public function hasToolbarItem($id) {
-    return in_array($id, $this->toolbar, TRUE);
+    return in_array($id, $this->getToolbar(), TRUE);
   }
 
   /**
@@ -133,7 +123,7 @@ class BUEditorEditor extends ConfigEntityBase {
     if (!isset($this->jsData)) {
       $this->jsData = array(
         'libraries' => array('bueditor/drupal.bueditor'),
-        'settings' => array('toolbar' => $this->getToolbar()),
+        'settings' => array_filter($this->getSettings()) + array('toolbar' => array()),
       );
       \Drupal::service('plugin.manager.bueditor.plugin')->alterEditorJS($this->jsData, $this, $editor);
     }

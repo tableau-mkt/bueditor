@@ -52,20 +52,21 @@ class BUEditorEditorForm extends EntityForm {
       '#title' => $this->t('Description'),
       '#default_value' => $bueditor_editor->get('description'),
     );
+    // Settings
+    $form['settings'] = array('#tree' => TRUE);
     // Toolbar
     $widget = $this->getToolbarWidget();
     $widget_libraries = $widget['libraries'];
     unset($widget['libraries']);
-    $form['toolbar_config'] = array(
-      '#type' => 'details',
+    $form['settings']['toolbar_config'] = array(
+      '#type' => 'fieldset',
       '#title' => $this->t('Toolbar configuration'),
-      '#open' => TRUE,
       '#attached' => array(
         'library' => $widget_libraries,
         'drupalSettings' => array('bueditor' => array('twSettings' => $widget)),
       ),
     );
-    $form['toolbar_config']['toolbar'] = array(
+    $form['settings']['toolbar_config']['toolbar'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Active toolbar'),
       '#default_value' => implode(', ', $bueditor_editor->getToolbar()),
@@ -73,6 +74,7 @@ class BUEditorEditorForm extends EntityForm {
         'class' => array('bueditor-toolbar-input'),
       ),
       '#maxlength' => NULL,
+      '#parents' => array('settings', 'toolbar')
     );
     // Add demo
     if (!$bueditor_editor->isNew()) {
@@ -85,9 +87,9 @@ class BUEditorEditorForm extends EntityForm {
       $form['demo']['#attached']['library'] = $bueditor_editor->getLibraries();
       $form['demo']['#attached']['drupalSettings']['bueditor']['demoSettings'] = $bueditor_editor->getJSSettings();
     }
+    // Add admin library
     $form['#attached']['library'][] = 'bueditor/drupal.bueditor.admin';
     // Allow plugins to add their elements
-    $form['plugins'] = array('#tree' => TRUE);
     \Drupal::service('plugin.manager.bueditor.plugin')->alterEditorForm($form, $form_state, $bueditor_editor);
     return parent::form($form, $form_state);
   }
@@ -97,10 +99,10 @@ class BUEditorEditorForm extends EntityForm {
    */
   public function validate(array $form, FormStateInterface $form_state) {
     parent::validate($form, $form_state);
-    $toolbar = $form_state->getValue('toolbar');
+    $toolbar = &$form_state->getValue(array('settings', 'toolbar'));
     // Convert toolbar to array.
     if (is_string($toolbar)) {
-      $form_state->setValue('toolbar', array_values(array_filter(array_map('trim', explode(',', $toolbar)))));
+      $toolbar = array_values(array_filter(array_map('trim', explode(',', $toolbar))));
     }
     \Drupal::service('plugin.manager.bueditor.plugin')->validateEditorForm($form, $form_state, $this->getEntity());
   }

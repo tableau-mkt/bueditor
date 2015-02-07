@@ -83,10 +83,9 @@ class Core extends BUEditorPluginBase {
         $toolbar->remove('xpreview');
       }
     }
-    // Add plugin settings
-    $settings = array_filter($bueditor_editor->getPluginSettings('core'));
-    $settings['cname'] = 'bue--' . $bueditor_editor->id() . (isset($settings['cname']) ? ' ' . $settings['cname'] : '');
-    $data['settings'] += $settings;
+    // Set editor id as the class name
+    $cname = &$data['settings']['cname'];
+    $cname = 'bue--' . $bueditor_editor->id() . (isset($cname) ? ' ' . $cname : '');
   }
 
   /**
@@ -117,11 +116,7 @@ class Core extends BUEditorPluginBase {
    * {@inheritdoc}
    */
   public function alterEditorForm(array &$form, FormStateInterface $form_state, BUEditorEditor $bueditor_editor) {
-    $form['plugins']['core'] = array(
-      '#type' => 'details',
-      '#title' => $this->t('Core settings'),
-    );
-    $form['plugins']['core'] += $this->getForm($form_state, $bueditor_editor);
+    $form['settings'] += $this->getForm($form_state, $bueditor_editor);
   }
 
   /**
@@ -129,13 +124,13 @@ class Core extends BUEditorPluginBase {
    */
   public function validateEditorForm(array &$form, FormStateInterface $form_state, BUEditorEditor $bueditor_editor) {
     // Check class name
-    $cname = $form_state->getValue(array('plugins', 'core', 'cname'));
+    $cname = $form_state->getValue(array('settings', 'cname'));
     if (!empty($cname) && preg_match('/[^a-zA-Z0-9\-_ ]/', $cname)) {
-      $form_state->setError($form['plugins']['core']['cname'], $this->t('Class name is invalid.'));
+      $form_state->setError($form['settings']['cname'], $this->t('Class name is invalid.'));
     }
     // Warn about XPreview permission if it is newly activated.
     if (!$form_state->getErrors()) {
-      if (!$bueditor_editor->hasToolbarItem('xpreview') && in_array('xpreview', $form_state->getValue('toolbar'))) {
+      if (!$bueditor_editor->hasToolbarItem('xpreview') && in_array('xpreview', $form_state->getValue(array('settings', 'toolbar')))) {
         $msg = $this->t('Ajax preview button has been enabled.') . ' ' . $this->t('Please check the <a href="@url">required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
         drupal_set_message($msg);
       }
@@ -150,21 +145,21 @@ class Core extends BUEditorPluginBase {
     $form['cname'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Class name'),
-      '#default_value' => $bueditor_editor->getPluginSettings('core', 'cname'),
+      '#default_value' => $bueditor_editor->getSettings('cname'),
       '#description' => $this->t('Additional class name for the editor element.'),
     );
     // Indentation
     $form['indent'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Enable indentation'),
-      '#default_value' => $bueditor_editor->getPluginSettings('core', 'indent'),
+      '#default_value' => $bueditor_editor->getSettings('indent'),
       '#description' => $this->t('Enable 2 spaces indent by <kbd>TAB</kbd>, unindent by <kbd>Shift+TAB</kbd>, and auto-indent by <kbd>ENTER</kbd>. Once enabled it can be turned on/off dynamically by <kbd>Ctrl+Alt+TAB</kbd>.'),
     );
     // Autocomplete HTML tags
     $form['acTags'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Autocomplete HTML tags'),
-      '#default_value' => $bueditor_editor->getPluginSettings('core', 'acTags'),
+      '#default_value' => $bueditor_editor->getSettings('acTags'),
       '#description' => $this->t('Automatically insert html closing tags.'),
     );
     return $form;

@@ -21,32 +21,31 @@ bueditor.editor.*:
     description:
       type: label
       label: 'Description'
-    toolbar:
+    settings:
       type: sequence
-      label: 'Toolbar'
+      label: 'Settings'
       sequence:
-        - type: string
-          label: 'Toolbar item'
-    plugins:
-      type: sequence
-      label: 'Plugins'
-      sequence:
-        - type: bueditor.plugin.[%key]
+        - type: bueditor.editor_settings.[%key]
+        
+# Editor settings
+bueditor.editor_settings.toolbar:
+  type: sequence
+  label: 'Toolbar'
+  sequence:
+    - type: string
+      label: 'Toolbar item'
 
-# BUEditor Core Plugin \Drupal\bueditor\Plugin\BUEditorPlugin\Core
-bueditor.plugin.core:
-  type: mapping
-  label: 'Core plugin'
-  mapping:
-    cname:
-      type: string
-      label: 'Class name'
-    indent:
-      type: boolean
-      label: 'Enable indentation'
-    acTags:
-      type: boolean
-      label: 'Autocomplete HTML tags'
+bueditor.editor_settings.cname:
+  type: string
+  label: 'Class name'
+
+bueditor.editor_settings.indent:
+  type: boolean
+  label: 'Enable indentation'
+
+bueditor.editor_settings.acTags:
+  type: boolean
+  label: 'Autocomplete HTML tags'
 
 # BUEditor Button entity
 bueditor.button.*:

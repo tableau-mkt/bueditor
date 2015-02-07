@@ -134,7 +134,7 @@ class BUEditorButtonForm extends EntityForm {
     );
     // Add demo
     if (!$bueditor_button->isNew()) {
-      $bueditor_editor = entity_create('bueditor_editor', array('id' => '_button_demo', 'toolbar' => array($bueditor_button->id())));
+      $bueditor_editor = entity_create('bueditor_editor', array('id' => '_button_demo', 'settings' => array('toolbar' => array($bueditor_button->id()))));
       $formats = array();
       foreach (filter_formats(\Drupal::currentUser()) as $format) {
         $formats[] = '<option value="' . String::checkPlain($format->id()) . '">' . String::checkPlain($format->label()) . '</option>';
