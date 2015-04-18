@@ -88,11 +88,12 @@ class BUEditorToolbarWrapper {
   }
 
   /**
-   * Removes an item.
+   * Removes an item or a list of items.
    */
   public function remove($id) {
-    if (isset($this->assocToolbar[$id])) {
-      $this->toolbar = array_diff($this->toolbar, array($id));
+    $ids = is_array($id) ? $id : array($id);
+    $this->toolbar = array_diff($this->toolbar, $ids);
+    foreach ($ids as $id) {
       unset($this->assocToolbar[$id]);
     }
     return $this;
