@@ -273,7 +273,7 @@ Editor.insertHtmlObj = function(htmlObj, collapse, toggle) {
  */
 Editor.browseButton = function(inputName, browseType, buttonLabel) {
   var settings = this.settings, browserName = settings[browseType + 'Browser'] || settings.fileBrowser;
-  if (browserName) {
+  if (browserName && BUE.fileBrowsers[browserName]) {
     return BUE.browseButton(browserName, inputName, browseType, buttonLabel);
   }
 };
