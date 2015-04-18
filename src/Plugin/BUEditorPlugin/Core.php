@@ -19,8 +19,8 @@ use Drupal\bueditor\BUEditorToolbarWrapper;
  *
  * @BUEditorPlugin(
  *   id = "core",
- *   label = "BUEditor Core",
- *   weight = -10
+ *   label = "Core",
+ *   weight = -99
  * )
  */
 class Core extends BUEditorPluginBase {
@@ -49,8 +49,6 @@ class Core extends BUEditorPluginBase {
     for ($i = 1; $i < 7; $i++) {
       $buttons['h' . $i] = $this->t('Heading !n', array('!n' => $i));
     }
-    // Module buttons.
-    $buttons['xpreview'] = $this->t('Preview');
     return $buttons;
   }
 
@@ -71,16 +69,6 @@ class Core extends BUEditorPluginBase {
         foreach ($button->get('libraries') as $library) {
           $data['libraries'][] = $library;
         }
-      }
-    }
-    // Check ajax preview button.
-    if ($toolbar->has('xpreview')) {
-      // Check access and add the library
-      if (\Drupal::currentUser()->hasPermission('access ajax preview')) {
-        $data['libraries'][] = 'bueditor/drupal.bueditor.xpreview';
-      }
-      else {
-        $toolbar->remove('xpreview');
       }
     }
     // Set editor id as the class name
@@ -106,10 +94,6 @@ class Core extends BUEditorPluginBase {
       unset($item['template'], $item['code']);
       $widget['items'][$bid] = $item;
     }
-    // Make xpreview definition available to toolbar widget
-    $widget['libraries'][] = 'bueditor/drupal.bueditor.xpreview';
-    // Add a tooltip for xpreview.
-    $widget['items']['xpreview']['tooltip'] = $this->t('Requires ajax preview permission.');
   }
 
   /**
@@ -127,13 +111,6 @@ class Core extends BUEditorPluginBase {
     $cname = $form_state->getValue(array('settings', 'cname'));
     if (!empty($cname) && preg_match('/[^a-zA-Z0-9\-_ ]/', $cname)) {
       $form_state->setError($form['settings']['cname'], $this->t('Class name is invalid.'));
-    }
-    // Warn about XPreview permission if it is newly activated.
-    if (!$form_state->getErrors()) {
-      if (!$bueditor_editor->hasToolbarItem('xpreview') && in_array('xpreview', $form_state->getValue(array('settings', 'toolbar')))) {
-        $msg = $this->t('Ajax preview button has been enabled.') . ' ' . $this->t('Please check the <a href="@url">required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
-        drupal_set_message($msg);
-      }
     }
   }
 
