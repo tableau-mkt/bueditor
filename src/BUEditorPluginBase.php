@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\bueditor\Plugin\BUEditorPluginBase.
+ * Contains \Drupal\bueditor\BUEditorPluginBase.
  */
 
 namespace Drupal\bueditor;
