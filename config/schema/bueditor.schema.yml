@@ -47,6 +47,10 @@ bueditor.editor_settings.acTags:
   type: boolean
   label: 'Autocomplete HTML tags'
 
+bueditor.editor_settings.fileBrowser:
+  type: string
+  label: 'File browser'
+
 # BUEditor Button entity
 bueditor.button.*:
   type: config_entity

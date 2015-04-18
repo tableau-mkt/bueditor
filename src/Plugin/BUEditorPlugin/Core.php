@@ -162,6 +162,15 @@ class Core extends BUEditorPluginBase {
       '#default_value' => $bueditor_editor->getSettings('acTags'),
       '#description' => $this->t('Automatically insert html closing tags.'),
     );
+    // File Browser
+    $form['fileBrowser'] = array(
+      '#type' => 'select',
+      '#title' => $this->t('File browser'),
+      '#options' => array(),
+      '#empty_value' => '',
+      '#default_value' => $bueditor_editor->getSettings('fileBrowser'),
+      '#description' => $this->t('File browser to be used in default image/link dialogs.'),
+    );
     return $form;
   }
 
