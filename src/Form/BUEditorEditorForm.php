@@ -52,21 +52,20 @@ class BUEditorEditorForm extends EntityForm {
       '#title' => $this->t('Description'),
       '#default_value' => $bueditor_editor->get('description'),
     );
-    // Settings
-    $form['settings'] = array('#tree' => TRUE);
     // Toolbar
     $widget = $this->getToolbarWidget();
     $widget_libraries = $widget['libraries'];
     unset($widget['libraries']);
-    $form['settings']['toolbar_config'] = array(
-      '#type' => 'fieldset',
+    $form['toolbar_config'] = array(
+      '#type' => 'details',
+      '#open' => TRUE,
       '#title' => $this->t('Toolbar configuration'),
       '#attached' => array(
         'library' => $widget_libraries,
         'drupalSettings' => array('bueditor' => array('twSettings' => $widget)),
       ),
     );
-    $form['settings']['toolbar_config']['toolbar'] = array(
+    $form['toolbar_config']['toolbar'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Active toolbar'),
       '#default_value' => implode(', ', $bueditor_editor->getToolbar()),
@@ -74,7 +73,43 @@ class BUEditorEditorForm extends EntityForm {
         'class' => array('bueditor-toolbar-input'),
       ),
       '#maxlength' => NULL,
-      '#parents' => array('settings', 'toolbar')
+      '#parents' => array('settings', 'toolbar'),
+    );
+    // Settings
+    $form['settings'] = array(
+      '#tree' => TRUE,
+      '#type' => 'details',
+      '#title' => $this->t('Settings'),
+    );
+    // Class name
+    $form['settings']['cname'] = array(
+      '#type' => 'textfield',
+      '#title' => $this->t('Class name'),
+      '#default_value' => $bueditor_editor->getSettings('cname'),
+      '#description' => $this->t('Additional class name for the editor element.'),
+    );
+    // Indentation
+    $form['settings']['indent'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable indentation'),
+      '#default_value' => $bueditor_editor->getSettings('indent'),
+      '#description' => $this->t('Enable 2 spaces indent by <kbd>TAB</kbd>, unindent by <kbd>Shift+TAB</kbd>, and auto-indent by <kbd>ENTER</kbd>. Once enabled it can be turned on/off dynamically by <kbd>Ctrl+Alt+TAB</kbd>.'),
+    );
+    // Autocomplete HTML tags
+    $form['settings']['acTags'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Autocomplete HTML tags'),
+      '#default_value' => $bueditor_editor->getSettings('acTags'),
+      '#description' => $this->t('Automatically insert html closing tags.'),
+    );
+    // File Browser
+    $form['settings']['fileBrowser'] = array(
+      '#type' => 'select',
+      '#title' => $this->t('File browser'),
+      '#options' => array(),
+      '#empty_value' => '',
+      '#default_value' => $bueditor_editor->getSettings('fileBrowser'),
+      '#description' => $this->t('File browser to be used in default image/link dialogs.'),
     );
     // Add demo
     if (!$bueditor_editor->isNew()) {
@@ -103,6 +138,11 @@ class BUEditorEditorForm extends EntityForm {
     // Convert toolbar to array.
     if (is_string($toolbar)) {
       $toolbar = array_values(array_filter(array_map('trim', explode(',', $toolbar))));
+    }
+    // Check class name
+    $cname = $form_state->getValue(array('settings', 'cname'));
+    if (!empty($cname) && preg_match('/[^a-zA-Z0-9\-_ ]/', $cname)) {
+      $form_state->setError($form['settings']['cname'], $this->t('Class name is invalid.'));
     }
     \Drupal::service('plugin.manager.bueditor.plugin')->validateEditorForm($form, $form_state, $this->getEntity());
   }
