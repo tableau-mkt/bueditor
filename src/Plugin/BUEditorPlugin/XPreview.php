@@ -35,13 +35,13 @@ class XPreview extends BUEditorPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function alterEditorJS(array &$data, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
-    $toolbar = BUEditorToolbarWrapper::set($data['settings']['toolbar']);
+  public function alterEditorJS(array &$js, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
+    $toolbar = BUEditorToolbarWrapper::set($js['settings']['toolbar']);
     // Check ajax preview button.
     if ($toolbar->has('xpreview')) {
       // Check access and add the library
       if (\Drupal::currentUser()->hasPermission('access ajax preview')) {
-        $data['libraries'][] = 'bueditor/drupal.bueditor.xpreview';
+        $js['libraries'][] = 'bueditor/drupal.bueditor.xpreview';
       }
       else {
         $toolbar->remove('xpreview');

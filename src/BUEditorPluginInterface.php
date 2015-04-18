@@ -32,14 +32,14 @@ interface BUEditorPluginInterface extends PluginInspectionInterface {
   /**
    * Alters JS data of a BUEditor Editor.
    *
-   * @param array $data
+   * @param array $js
    *   An associative array that holds 'libraries' and 'settings' of the editor.
    * @param \Drupal\bueditor\Entity\BUEditorEditor $bueditor_editor
    *   BUEditor Editor entity that owns the data.
    * @param \Drupal\editor\Entity\Editor $editor
    *   An optional Editor entity which the BUEditor Editor is attached to.
    */
-  public function alterEditorJS(array &$data, BUEditorEditor $bueditor_editor, Editor $editor = NULL);
+  public function alterEditorJS(array &$js, BUEditorEditor $bueditor_editor, Editor $editor = NULL);
 
   /**
    * Alters the toolbar widget used in BUEditor Editor form.

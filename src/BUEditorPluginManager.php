@@ -139,8 +139,8 @@ class BUEditorPluginManager extends DefaultPluginManager {
   /**
    * Alters javascript data of a BUEditor Editor entity.
    */
-  public function alterEditorJS(array &$data, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
-    return $this->invokeAll('alterEditorJS', $data, $bueditor_editor, $editor);
+  public function alterEditorJS(array &$js, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
+    return $this->invokeAll('alterEditorJS', $js, $bueditor_editor, $editor);
   }
 
   /**

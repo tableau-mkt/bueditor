@@ -55,24 +55,24 @@ class Core extends BUEditorPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function alterEditorJS(array &$data, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
+  public function alterEditorJS(array &$js, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
     // Add translation library for multilingual sites.
     $lang = \Drupal::service('language_manager')->getCurrentLanguage()->getId();
     if ($lang !== 'en' && \Drupal::service('module_handler')->moduleExists('locale')) {
-      $data['libraries'][] = 'bueditor/drupal.bueditor.translation';
+      $js['libraries'][] = 'bueditor/drupal.bueditor.translation';
     }
     // Add custom button definitions and libraries.
-    $toolbar = BUEditorToolbarWrapper::set($data['settings']['toolbar']);
+    $toolbar = BUEditorToolbarWrapper::set($js['settings']['toolbar']);
     if ($custom_items = $toolbar->match('custom_')) {
       foreach (entity_load_multiple('bueditor_button', $custom_items) as $bid => $button) {
-        $data['settings']['customButtons'][$bid] = $button->jsProperties();
+        $js['settings']['customButtons'][$bid] = $button->jsProperties();
         foreach ($button->get('libraries') as $library) {
-          $data['libraries'][] = $library;
+          $js['libraries'][] = $library;
         }
       }
     }
     // Set editor id as the class name
-    $cname = &$data['settings']['cname'];
+    $cname = &$js['settings']['cname'];
     $cname = 'bue--' . $bueditor_editor->id() . (isset($cname) ? ' ' . $cname : '');
   }
 

@@ -32,7 +32,7 @@ abstract class BUEditorPluginBase extends PluginBase implements BUEditorPluginIn
   /**
    * {@inheritdoc}
    */
-  public function alterEditorJS(array &$data, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
+  public function alterEditorJS(array &$js, BUEditorEditor $bueditor_editor, Editor $editor = NULL) {
   }
 
   /**
