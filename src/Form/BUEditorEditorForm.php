@@ -64,6 +64,7 @@ class BUEditorEditorForm extends EntityForm {
         'library' => $widget_libraries,
         'drupalSettings' => array('bueditor' => array('twSettings' => $widget)),
       ),
+      '#weight' => 1,
     );
     $form['toolbar_config']['toolbar'] = array(
       '#type' => 'textfield',
@@ -80,6 +81,7 @@ class BUEditorEditorForm extends EntityForm {
       '#tree' => TRUE,
       '#type' => 'details',
       '#title' => $this->t('Settings'),
+      '#weight' => 2,
     );
     // Class name
     $form['settings']['cname'] = array(
@@ -94,6 +96,7 @@ class BUEditorEditorForm extends EntityForm {
       '#title' => $this->t('Enable indentation'),
       '#default_value' => $bueditor_editor->getSettings('indent'),
       '#description' => $this->t('Enable 2 spaces indent by <kbd>TAB</kbd>, unindent by <kbd>Shift+TAB</kbd>, and auto-indent by <kbd>ENTER</kbd>. Once enabled it can be turned on/off dynamically by <kbd>Ctrl+Alt+TAB</kbd>.'),
+      '#weight' => 1,
     );
     // Autocomplete HTML tags
     $form['settings']['acTags'] = array(
@@ -101,6 +104,7 @@ class BUEditorEditorForm extends EntityForm {
       '#title' => $this->t('Autocomplete HTML tags'),
       '#default_value' => $bueditor_editor->getSettings('acTags'),
       '#description' => $this->t('Automatically insert html closing tags.'),
+      '#weight' => 2,
     );
     // File Browser
     $form['settings']['fileBrowser'] = array(
@@ -109,7 +113,8 @@ class BUEditorEditorForm extends EntityForm {
       '#options' => array(),
       '#empty_value' => '',
       '#default_value' => $bueditor_editor->getSettings('fileBrowser'),
-      '#description' => $this->t('File browser to be used in default image/link dialogs.'),
+      '#description' => $this->t('File browser to use in default image/link dialogs.'),
+      '#weight' => 3,
     );
     // Add demo
     if (!$bueditor_editor->isNew()) {
