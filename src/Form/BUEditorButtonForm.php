@@ -9,7 +9,7 @@ namespace Drupal\bueditor\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\String;
+use Drupal\Component\Utility\SafeMarkup;
 
 /**
  * Base form for BUEditor Button entities.
@@ -137,7 +137,7 @@ class BUEditorButtonForm extends EntityForm {
       $bueditor_editor = entity_create('bueditor_editor', array('id' => '_button_demo', 'settings' => array('toolbar' => array($bueditor_button->id()))));
       $formats = array();
       foreach (filter_formats(\Drupal::currentUser()) as $format) {
-        $formats[] = '<option value="' . String::checkPlain($format->id()) . '">' . String::checkPlain($format->label()) . '</option>';
+        $formats[] = '<option value="' . SafeMarkup::checkPlain($format->id()) . '">' . SafeMarkup::checkPlain($format->label()) . '</option>';
       }
       $form['demo']['#markup'] = '<div class="form-item form-type-textarea bueditor-demo"><label>' . $this->t('Demo') . '</label><textarea class="form-textarea" cols="40" rows="5"></textarea><div class="form-item form-type-select filter-wrapper"><span class="label">' . $this->t('Text format') . '</span> <select class="filter-list form-select">' . implode('', $formats) . '</select></div></div>';
       $form['demo']['#weight'] = 1000;
