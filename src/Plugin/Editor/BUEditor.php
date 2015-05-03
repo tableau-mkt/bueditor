@@ -21,7 +21,10 @@ use Drupal\bueditor\Entity\BUEditorEditor;
  *   label = "BUEditor",
  *   supports_content_filtering = FALSE,
  *   supports_inline_editing = FALSE,
- *   is_xss_safe = TRUE
+ *   is_xss_safe = TRUE,
+ *   supported_element_types = {
+ *     "textarea"
+ *   }
  * )
  */
 class BUEditor extends EditorBase {
