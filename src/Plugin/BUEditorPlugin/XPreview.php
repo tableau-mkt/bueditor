@@ -68,7 +68,7 @@ class XPreview extends BUEditorPluginBase {
       if ($bueditor_editor->hasToolbarItem('xpreview')) {
         $ori = $bueditor_editor->isNew() ? NULL : $bueditor_editor->load($bueditor_editor->id());
         if (!$ori || !$ori->hasToolbarItem('xpreview')) {
-          $msg = $this->t('Ajax preview button has been enabled.') . ' ' . $this->t('Please check the <a href="@url">required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
+          $msg = $this->t('Ajax preview button has been enabled. Please check <a href="@url">the required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
           drupal_set_message($msg);
         }
       }
