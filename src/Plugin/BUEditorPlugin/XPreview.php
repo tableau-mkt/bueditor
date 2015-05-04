@@ -65,9 +65,12 @@ class XPreview extends BUEditorPluginBase {
   public function validateEditorForm(array &$form, FormStateInterface $form_state, BUEditorEditor $bueditor_editor) {
     // Warn about XPreview permission if it is newly activated.
     if (!$form_state->getErrors()) {
-      if (!$bueditor_editor->hasToolbarItem('xpreview') && in_array('xpreview', $form_state->getValue(array('settings', 'toolbar')))) {
-        $msg = $this->t('Ajax preview button has been enabled.') . ' ' . $this->t('Please check the <a href="@url">required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
-        drupal_set_message($msg);
+      if ($bueditor_editor->hasToolbarItem('xpreview')) {
+        $ori = $bueditor_editor->isNew() ? NULL : $bueditor_editor->load($bueditor_editor->id());
+        if (!$ori || !$ori->hasToolbarItem('xpreview')) {
+          $msg = $this->t('Ajax preview button has been enabled.') . ' ' . $this->t('Please check the <a href="@url">required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
+          drupal_set_message($msg);
+        }
       }
     }
   }

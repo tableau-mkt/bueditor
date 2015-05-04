@@ -139,17 +139,22 @@ class BUEditorEditorForm extends EntityForm {
    */
   public function validate(array $form, FormStateInterface $form_state) {
     parent::validate($form, $form_state);
+    $bueditor_editor = $this->getEntity();
     $toolbar = &$form_state->getValue(array('settings', 'toolbar'));
     // Convert toolbar to array.
     if (is_string($toolbar)) {
       $toolbar = array_values(array_filter(array_map('trim', explode(',', $toolbar))));
+    }
+    // Entity has the raw form values.
+    if (is_string($bueditor_editor->getToolbar())) {
+      $bueditor_editor->setToolbar($toolbar);
     }
     // Check class name
     $cname = $form_state->getValue(array('settings', 'cname'));
     if (!empty($cname) && preg_match('/[^a-zA-Z0-9\-_ ]/', $cname)) {
       $form_state->setError($form['settings']['cname'], $this->t('Class name is invalid.'));
     }
-    \Drupal::service('plugin.manager.bueditor.plugin')->validateEditorForm($form, $form_state, $this->getEntity());
+    \Drupal::service('plugin.manager.bueditor.plugin')->validateEditorForm($form, $form_state, $bueditor_editor);
   }
 
   /**
