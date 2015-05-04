@@ -87,6 +87,13 @@ class BUEditorEditor extends ConfigEntityBase {
   }
 
   /**
+   * Sets the toolbar array.
+   */
+  public function setToolbar(array $toolbar) {
+    return $this->settings['toolbar'] = $toolbar;
+  }
+
+  /**
    * Returns the toolbar array.
    */
   public function getToolbar() {
