@@ -164,8 +164,8 @@ class BUEditorButtonForm extends EntityForm {
     if (!$form_state->getError($form['id'])) {
       $id = 'custom_' . $values['id'];
       $form_state->setValue('id', $id);
-      // Check duplicate
-      if ($id != $bueditor_button->id()) {
+      // Check duplicate.  Entity contains the submitted values
+      if ($id != $bueditor_button->getOriginalId()) {
         if ($bueditor_button->load($id)) {
           $form_state->setError($form['id'], $this->t('The machine-readable name is already in use. It must be unique.'));
         }
