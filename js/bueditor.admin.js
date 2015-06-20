@@ -221,7 +221,7 @@ Main.createDemo = function(textarea, settings) {
     // Set load time info
     E.addContent('Editor load time: ' + (new Date() - date) + 'ms', '\n');
     // Update editor format on format select. It can be used by preview button.
-    $(textarea).closest('.text-format-wrapper').find('.filter-list').change(function() {
+    $(textarea).closest('.text-format-wrapper').addClass('bueditor-demo-wrapper').find('.filter-list').change(function() {
       E.settings.inputFormat = this.value;
     }).change();
   }

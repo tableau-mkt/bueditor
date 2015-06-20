@@ -52,8 +52,8 @@
   content: ' ';
 }
 
-/* Demo */
-.form-item.bueditor-demo {
+/* Demo wrapper */
+.form-item.bueditor-demo-wrapper {
   margin-top: 3em;
 }
 
