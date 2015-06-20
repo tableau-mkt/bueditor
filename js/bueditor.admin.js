@@ -31,7 +31,7 @@ var Main = Drupal.bueditorAdmin = {};
  * Drupal behavior .
  */
 Drupal.behaviors.bueditorAdmin = {attach: function(context, settings) {
-  var i, wrpEl, inputEl, $input, bueset;
+  var i, textarea, inputEl, $input, bueset;
   if (bueset = settings.bueditor) {
     // Attach toolbar widget to toolbar input fields.
     if ($.fn.sortable && bueset.twSettings) {
@@ -45,8 +45,8 @@ Drupal.behaviors.bueditorAdmin = {attach: function(context, settings) {
     }
     // Install demo
     if (bueset.demoSettings) {
-      if (wrpEl = $('.bueditor-demo', context).not('.demo-processed').addClass('demo-processed')[0]) {
-        Main.createDemo(wrpEl, bueset.demoSettings);
+      if (textarea = $('.bueditor-demo', context).not('.demo-processed').addClass('demo-processed')[0]) {
+        Main.createDemo(textarea, bueset.demoSettings);
       }
     }
   }
@@ -215,17 +215,15 @@ Main.syncInput = function($toolbar) {
 /**
  * Create the demo editor inside the wrapper.
  */
-Main.createDemo = function(wrpEl, settings) {
-  var E, textarea, date = new Date();
-  if (textarea = $('textarea', wrpEl)[0]) {
-    if (E = BUE.attach(textarea, settings)) {
-      // Set load time info
-      E.addContent('Editor load time: ' + (new Date() - date) + 'ms', '\n');
-      // Update editor format on format select. It can be used by preview button.
-      $('.filter-list', wrpEl).change(function() {
-        E.settings.inputFormat = this.value;
-      }).change();
-    }
+Main.createDemo = function(textarea, settings) {
+  var E, date = new Date();
+  if (E = BUE.attach(textarea, settings)) {
+    // Set load time info
+    E.addContent('Editor load time: ' + (new Date() - date) + 'ms', '\n');
+    // Update editor format on format select. It can be used by preview button.
+    $(textarea).closest('.text-format-wrapper').find('.filter-list').change(function() {
+      E.settings.inputFormat = this.value;
+    }).change();
   }
   return E;
 };

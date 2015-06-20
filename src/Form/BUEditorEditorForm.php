@@ -122,14 +122,19 @@ class BUEditorEditorForm extends EntityForm {
     );
     // Add demo
     if (!$bueditor_editor->isNew()) {
-      $formats = array();
-      foreach (filter_formats(\Drupal::currentUser()) as $format) {
-        $formats[] = '<option value="' . SafeMarkup::checkPlain($format->id()) . '">' . SafeMarkup::checkPlain($format->label()) . '</option>';
-      }
-      $form['demo']['#markup'] = '<div class="form-item form-type-textarea bueditor-demo"><label>' . $this->t('Demo') . '</label><textarea class="form-textarea" cols="40" rows="5"></textarea><div class="form-item form-type-select filter-wrapper"><span class="label">' . $this->t('Text format') . '</span> <select class="filter-list form-select">' . implode('', $formats) . '</select></div></div>';
-      $form['demo']['#weight'] = 1000;
-      $form['demo']['#attached']['library'] = $bueditor_editor->getLibraries();
-      $form['demo']['#attached']['drupalSettings']['bueditor']['demoSettings'] = $bueditor_editor->getJSSettings();
+      $attached['library'] = $bueditor_editor->getLibraries();
+      $attached['drupalSettings']['bueditor']['demoSettings'] = $bueditor_editor->getJSSettings();
+      $form['demo'] = array(
+        '#type' => 'text_format',
+        '#base_type' => 'textarea',
+        '#title' => $this->t('Demo'),
+        '#weight' => 1000,
+        '#attributes' => array('class' => array('bueditor-demo')),
+        '#attached' => $attached,
+        '#editor' => FALSE,
+        '#input' => FALSE,
+        '#value' => NULL,
+      );
     }
     // Add admin library
     $form['#attached']['library'][] = 'bueditor/drupal.bueditor.admin';
