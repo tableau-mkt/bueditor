@@ -134,7 +134,7 @@ class BUEditorButtonForm extends EntityForm {
     );
     // Add demo
     if (!$bueditor_button->isNew()) {
-      $bueditor_editor = entity_create('bueditor_editor', array('id' => '_button_demo', 'settings' => array('toolbar' => array($bueditor_button->id()))));
+      $bueditor_editor = \Drupal::entityManager()->getStorage('bueditor_editor')->create(array('id' => '_button_demo', 'settings' => array('toolbar' => array($bueditor_button->id()))));
       $attached['library'] = $bueditor_editor->getLibraries();
       $attached['drupalSettings']['bueditor']['demoSettings'] = $bueditor_editor->getJSSettings();
       $form['demo'] = array(
