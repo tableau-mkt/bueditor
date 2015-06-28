@@ -96,7 +96,7 @@ Main.createTwElements = function(items) {
     item = items[id];
     // Create the item element and set required attributes
     template = !item.code && typeof item.template === 'string' && item.template;
-    el = BUE.createEl(template || BUE.buttonHtml(item));
+    el = BUE.createEl(template || BUE.html(BUE.buttonHtmlObj(item)));
     el.setAttribute('data-bueditor-tw-item', id);
     el.className += ' bueditor-tw-item';
     if (item.multiple || template && item.multiple === undefined) {
