@@ -45,7 +45,8 @@ class XPreviewController extends ControllerBase {
         }
       }
       $data['usedFormat'] = $used_format;
-      $data['output'] = check_markup($input, $used_format);
+      $build = array('#type' => 'processed_text', '#text' => $input, '#format' => $used_format);
+      $data['output'] = '' . \Drupal::service('renderer')->renderPlain($build);
     }
     return new JsonResponse($data);
   }
