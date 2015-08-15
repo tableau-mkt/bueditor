@@ -146,8 +146,8 @@ class BUEditorEditorForm extends EntityForm {
   /**
    * {@inheritdoc}
    */
-  public function validate(array $form, FormStateInterface $form_state) {
-    parent::validate($form, $form_state);
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    parent::validateForm($form, $form_state);
     $bueditor_editor = $this->getEntity();
     $toolbar = &$form_state->getValue(array('settings', 'toolbar'));
     // Convert toolbar to array.

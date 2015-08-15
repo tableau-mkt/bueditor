@@ -157,7 +157,7 @@ class BUEditorButtonForm extends EntityForm {
   /**
    * {@inheritdoc}
    */
-  public function validate(array $form, FormStateInterface $form_state) {
+  public function validateForm(array &$form, FormStateInterface $form_state) {
     $bueditor_button = $this->getEntity();
     $values = $form_state->getValues();
     // Add ID prefix
@@ -191,7 +191,7 @@ class BUEditorButtonForm extends EntityForm {
     if (isset($values['libraries']) && is_string($values['libraries'])) {
       $form_state->setValue('libraries', array_values(array_filter(array_map('trim', explode(',', $values['libraries'])))));
     }
-    return parent::validate($form, $form_state);
+    return parent::validateForm($form, $form_state);
   }
 
   /**
