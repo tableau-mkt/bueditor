@@ -56,7 +56,26 @@ class BUEditorPluginManager extends DefaultPluginManager {
   }
 
   /**
-   * Returns available plugin instances.
+   * {@inheritdoc}
+   */
+  protected function findDefinitions() {
+    $definitions = parent::findDefinitions();
+    // Sort definitions by weight
+    uasort($definitions, array('Drupal\Component\Utility\SortArray', 'sortByWeightElement'));
+    return $definitions;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getInstance(array $options) {
+    if (isset($options['id']) && $id = $options['id']) {
+      return isset($this->instances[$id]) ? $this->instances[$id] : $this->createInstance($id);
+    }
+  }
+
+  /**
+   * Returns all available plugin instances.
    *
    * @return array
    *   A an array plugin intances.
@@ -64,10 +83,8 @@ class BUEditorPluginManager extends DefaultPluginManager {
   public function getInstances() {
     if (!isset($this->instances)) {
       $this->instances = array();
-      $definitions = $this->getDefinitions();
-      uasort($definitions, array('Drupal\Component\Utility\SortArray', 'sortByWeightElement'));
-      foreach ($definitions as $plugin => $def) {
-        $this->instances[$plugin] = $this->createInstance($plugin);
+      foreach ($this->getDefinitions() as $id => $def) {
+        $this->instances[$id] = $this->createInstance($id);
       }
     }
     return $this->instances;
