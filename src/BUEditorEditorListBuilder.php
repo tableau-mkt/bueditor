@@ -9,7 +9,6 @@ namespace Drupal\bueditor;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Component\Utility\SafeMarkup;
 
 /**
  * Defines a class to build a list of BUEditor Editor entities.
@@ -33,8 +32,8 @@ class BUEditorEditorListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $bueditor_editor) {
     $row['label'] = $bueditor_editor->label();
-    $row['description'] = SafeMarkup::checkPlain($bueditor_editor->get('description'));
-    $row['toolbar'] = SafeMarkup::checkPlain(implode(', ', $bueditor_editor->getToolbar()));
+    $row['description'] = $bueditor_editor->get('description');
+    $row['toolbar'] = implode(', ', $bueditor_editor->getToolbar());
     return $row + parent::buildRow($bueditor_editor);
   }
 

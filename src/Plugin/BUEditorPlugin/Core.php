@@ -9,7 +9,7 @@ namespace Drupal\bueditor\Plugin\BUEditorPlugin;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\bueditor\BUEditorPluginBase;
 use Drupal\bueditor\Entity\BUEditorEditor;
 use Drupal\bueditor\BUEditorToolbarWrapper;
@@ -86,7 +86,7 @@ class Core extends BUEditorPluginBase {
       // Define template buttons as normal buttons with a special class name.
       if (!empty($item['template']) && empty($item['code'])) {
         $item['cname'] = 'template-button ficon-template' . (!empty($item['cname']) ? ' ' . $item['cname'] : '');
-        $item['text'] = '<span class="template-button-text">' . (empty($item['text']) ? SafeMarkup::checkPlain($item['label']) : $item['text']) . '</span>';
+        $item['text'] = '<span class="template-button-text">' . (empty($item['text']) ? Html::escape($item['label']) : $item['text']) . '</span>';
         $item['label'] = '[' . $this->t('Template') . ']' . $item['label'];
         $item['multiple'] = TRUE;
       }
