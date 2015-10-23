@@ -47,7 +47,7 @@ class Core extends BUEditorPluginBase {
       'redo' => $this->t('Redo'),
     );
     for ($i = 1; $i < 7; $i++) {
-      $buttons['h' . $i] = $this->t('Heading !n', array('!n' => $i));
+      $buttons['h' . $i] = $this->t('Heading @n', array('@n' => $i));
     }
     return $buttons;
   }

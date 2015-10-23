@@ -23,7 +23,7 @@ class BUEditorButtonForm extends EntityForm {
     // Check duplication
     if ($this->getOperation() === 'duplicate') {
       $bueditor_button = $bueditor_button->createDuplicate();
-      $bueditor_button->set('label', $this->t('Duplicate of !label', array('!label' => $bueditor_button->label())));
+      $bueditor_button->set('label', $this->t('Duplicate of @label', array('@label' => $bueditor_button->label())));
       $this->setEntity($bueditor_button);
     }
     // Label
@@ -115,7 +115,7 @@ class BUEditorButtonForm extends EntityForm {
       '#type' => 'textfield',
       '#title' => $this->t('Class name'),
       '#default_value' => $bueditor_button->get('cname'),
-      '#description' => $this->t('Additional class name for the button element.') . '<br />' . $this->t('Font icon class can be used as <code>ficon-NAME</code> where <code>NAME</code> is one of <em>!names</em>.', array('!names' => 'bold, italic, underline, strike, image, link, quote, code, ul, ol, table, template, undo, redo, preview, help')),
+      '#description' => $this->t('Additional class name for the button element.') . '<br />' . $this->t('Font icon class can be used as <code>ficon-NAME</code> where <code>NAME</code> is one of %names.', array('%names' => 'bold, italic, underline, strike, image, link, quote, code, ul, ol, table, template, undo, redo, preview, help')),
     );
     // Class name
     $form['button']['shortcut'] = array(
@@ -179,11 +179,11 @@ class BUEditorButtonForm extends EntityForm {
       $form_state->setValue('template', '');
       // Check class name
       if (!empty($values['cname']) && preg_match('/[^a-zA-Z0-9\-_ ]/', $values['cname'])) {
-        $form_state->setErrorByName('cname', $this->t('!field contains invalid characters.', array('!field' => $this->t('Class name'))));
+        $form_state->setErrorByName('cname', $this->t('@field contains invalid characters.', array('@field' => $this->t('Class name'))));
       }
       // Check shortcut
       if (!empty($values['shortcut']) && preg_match('/[^a-zA-Z0-9\+]/', $values['shortcut'])) {
-        $form_state->setErrorByName('shortcut', $this->t('!field contains invalid characters.', array('!field' => $this->t('Shortcut'))));
+        $form_state->setErrorByName('shortcut', $this->t('@field contains invalid characters.', array('@field' => $this->t('Shortcut'))));
       }
     }
     // Convert libraries to array.

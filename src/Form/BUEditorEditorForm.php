@@ -23,7 +23,7 @@ class BUEditorEditorForm extends EntityForm {
     // Check duplication
     if ($this->getOperation() === 'duplicate') {
       $bueditor_editor = $bueditor_editor->createDuplicate();
-      $bueditor_editor->set('label', $this->t('Duplicate of !label', array('!label' => $bueditor_editor->label())));
+      $bueditor_editor->set('label', $this->t('Duplicate of @label', array('@label' => $bueditor_editor->label())));
       $this->setEntity($bueditor_editor);
     }
     // Label

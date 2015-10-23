@@ -52,7 +52,7 @@ class BUEditor extends EditorBase {
       '#title' => $this->t('BUEditor Editor'),
       '#options' => $bueditor_editors,
       '#default_value' => $settings['default_editor'],
-      '#description' => $this->t('Select the default editor for the authorized roles. Editors can be configured at <a href="!url">BUEditor admin page</a>.', array('!url' => \Drupal::url('bueditor.admin'))),
+      '#description' => $this->t('Select the default editor for the authorized roles. Editors can be configured at <a href=":url">BUEditor admin page</a>.', array(':url' => \Drupal::url('bueditor.admin'))),
       '#empty_option' => '- ' . $this->t('Select an editor') . ' -',
     );
     // Roles editors
