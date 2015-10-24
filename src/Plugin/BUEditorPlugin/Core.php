@@ -81,7 +81,7 @@ class Core extends BUEditorPluginBase {
    */
   public function alterToolbarWidget(array &$widget) {
     // Add custom button definitions.
-    foreach (entity_load_multiple('bueditor_button') as $bid => $button) {
+    foreach (\Drupal::entityManager()->getStorage('bueditor_button')->loadMultiple() as $bid => $button) {
       $item = $button->jsProperties();
       // Define template buttons as normal buttons with a special class name.
       if (!empty($item['template']) && empty($item['code'])) {
