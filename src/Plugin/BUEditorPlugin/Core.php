@@ -64,7 +64,7 @@ class Core extends BUEditorPluginBase {
     // Add custom button definitions and libraries.
     $toolbar = BUEditorToolbarWrapper::set($js['settings']['toolbar']);
     if ($custom_items = $toolbar->match('custom_')) {
-      foreach (entity_load_multiple('bueditor_button', $custom_items) as $bid => $button) {
+      foreach (\Drupal::entityManager()->getStorage('bueditor_button')->loadMultiple($custom_items) as $bid => $button) {
         $js['settings']['customButtons'][$bid] = $button->jsProperties();
         foreach ($button->get('libraries') as $library) {
           $js['libraries'][] = $library;
