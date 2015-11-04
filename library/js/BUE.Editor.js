@@ -83,7 +83,7 @@ Editor.createEl = function() {
     el.appendChild(twEl);
     // Add buttons.
     if (toolbar = settings.toolbar) {
-      for (i in toolbar) {
+      for (i = 0; i < toolbar.length; i++) {
         E.addButton(toolbar[i]);
       }
     }
