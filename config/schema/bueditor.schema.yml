@@ -1,6 +1,6 @@
 # Module settings
 bueditor.settings:
-  type: mapping
+  type: config_object
   label: 'BUEditor settings'
   mapping:
     devmode:
