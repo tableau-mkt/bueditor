@@ -11,7 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\editor\Entity\Editor;
 use Drupal\editor\Plugin\EditorBase;
-use Drupal\bueditor\Entity\BUEditorEditor;
 
 /**
  * Defines BUEditor as an Editor plugin.

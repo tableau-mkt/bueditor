@@ -7,7 +7,6 @@
 
 namespace Drupal\bueditor\Plugin\BUEditorPlugin;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
 use Drupal\Component\Utility\Html;
 use Drupal\bueditor\BUEditorPluginBase;

@@ -10,7 +10,6 @@ namespace Drupal\bueditor;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
-use Drupal\bueditor\BUEditorPluginInterface;
 use Drupal\bueditor\Entity\BUEditorEditor;
 
 /**
