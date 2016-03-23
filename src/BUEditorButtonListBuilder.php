@@ -43,7 +43,7 @@ class BUEditorButtonListBuilder extends ConfigEntityListBuilder {
     $operations['duplicate'] = array(
       'title' => t('Duplicate'),
       'weight' => 15,
-      'url' => $bueditor_button->urlInfo('duplicate-form'),
+      'url' => $bueditor_button->toUrl('duplicate-form'),
     );
     return $operations;
   }
