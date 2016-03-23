@@ -38,7 +38,7 @@ class XPreviewController extends ControllerBase {
       // Check format
       $format = $request->request->get('format');
       if ($format && is_string($format) && $format !== $used_format) {
-        if ($format = \Drupal::entityManager()->getStorage('filter_format')->load($format)) {
+        if ($format = \Drupal::entityTypeManager()->getStorage('filter_format')->load($format)) {
           if ($format->access('use', $user)) {
             $used_format = $format->id();
           }

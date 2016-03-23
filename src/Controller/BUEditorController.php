@@ -22,7 +22,7 @@ class BUEditorController extends ControllerBase {
       '#type' => 'container',
       '#attributes' => array('class' => array('bueditor-editor-list')),
       'title' => array('#markup' => '<h2>' . $this->t('Available editors') . '</h2>'),
-      'list' => $this->entityManager()->getListBuilder('bueditor_editor')->render(),
+      'list' => $this->entityTypeManager()->getListBuilder('bueditor_editor')->render(),
     );
     $output['#attached']['library'][] = 'bueditor/drupal.bueditor.admin';
     return $output;
@@ -37,7 +37,7 @@ class BUEditorController extends ControllerBase {
       '#type' => 'container',
       '#attributes' => array('class' => array('bueditor-button-list bbl-custom')),
       'title' => array('#markup' => '<h2>' . $this->t('Custom buttons') . '</h2>'),
-      'list' => $this->entityManager()->getListBuilder('bueditor_button')->render(),
+      'list' => $this->entityTypeManager()->getListBuilder('bueditor_button')->render(),
     );
     // Plugin buttons
     $groups = array();

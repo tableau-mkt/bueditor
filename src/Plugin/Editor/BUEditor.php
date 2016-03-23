@@ -42,7 +42,7 @@ class BUEditor extends EditorBase {
   public function settingsForm(array $form, FormStateInterface $form_state, Editor $editor) {
     $settings = $editor->getSettings();
     $bueditor_editors = array();
-    foreach (\Drupal::entityManager()->getStorage('bueditor_editor')->loadMultiple() as $bueditor_editor) {
+    foreach (\Drupal::entityTypeManager()->getStorage('bueditor_editor')->loadMultiple() as $bueditor_editor) {
       $bueditor_editors[$bueditor_editor->id()] = $bueditor_editor->label();
     }
     // Default editor
@@ -121,7 +121,7 @@ class BUEditor extends EditorBase {
       $account = \Drupal::currentUser();
     }
     $id = static::getBUEditorEditorId($editor, $account);
-    return $id ? \Drupal::entityManager()->getStorage('bueditor_editor')->load($id) : FALSE;
+    return $id ? \Drupal::entityTypeManager()->getStorage('bueditor_editor')->load($id) : FALSE;
   }
 
   /**
