@@ -70,6 +70,12 @@ BUE.setTextareaValue = function(textarea, value) {
   var scrollTop = textarea.scrollTop;
   textarea.value = value;
   textarea.scrollTop = scrollTop;
+  // Trigger textarea change but not too frequently.
+  clearTimeout(textarea.bueChangeTimeout);
+  textarea.bueChangeTimeout = setTimeout(function() {
+    $(textarea).change();
+    textarea = null;
+  }, 250);
 };
 
 /**
