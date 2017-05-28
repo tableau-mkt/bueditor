@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\BUEditorPluginInterface.
- */
-
 namespace Drupal\bueditor;
 
 use Drupal\Component\Plugin\PluginInspectionInterface;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Form\BUEditorEditorDeleteForm.
- */
-
 namespace Drupal\bueditor\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Form\BUEditorEditorForm.
- */
-
 namespace Drupal\bueditor\Form;
 
 use Drupal\Core\Entity\EntityForm;

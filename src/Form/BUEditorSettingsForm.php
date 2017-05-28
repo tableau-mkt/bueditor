@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Form\BUEditorSettingsForm.
- */
-
 namespace Drupal\bueditor\Form;
 
 use Drupal\Core\Form\ConfigFormBase;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Plugin\BUEditorPlugin\XPreview.
- */
-
 namespace Drupal\bueditor\Plugin\BUEditorPlugin;
 
 use Drupal\Core\Form\FormStateInterface;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Controller\XPreviewController.
- */
-
 namespace Drupal\bueditor\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;

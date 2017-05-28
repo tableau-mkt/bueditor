@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Entity\BUEditorEditor.
- */
-
 namespace Drupal\bueditor\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;

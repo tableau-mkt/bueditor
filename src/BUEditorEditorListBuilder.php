@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\BUEditorEditorListBuilder.
- */
-
 namespace Drupal\bueditor;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;

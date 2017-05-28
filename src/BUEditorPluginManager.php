@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\BUEditorPluginManager.
- */
-
 namespace Drupal\bueditor;
 
 use Drupal\Core\Plugin\DefaultPluginManager;

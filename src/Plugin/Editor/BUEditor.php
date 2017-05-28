@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Plugin\Editor\BUEditor.
- */
-
 namespace Drupal\bueditor\Plugin\Editor;
 
 use Drupal\Core\Form\FormStateInterface;

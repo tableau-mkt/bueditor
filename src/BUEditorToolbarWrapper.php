@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\BUEditorToolbarWrapper.
- */
-
 namespace Drupal\bueditor;
 
 /**

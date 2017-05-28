@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Controller\BUEditorController.
- */
-
 namespace Drupal\bueditor\Controller;
 
 use Drupal\Core\Controller\ControllerBase;

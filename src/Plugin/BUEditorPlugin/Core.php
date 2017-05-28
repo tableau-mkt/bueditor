@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\bueditor\Plugin\BUEditorPlugin\Core.
- */
-
 namespace Drupal\bueditor\Plugin\BUEditorPlugin;
 
 use Drupal\editor\Entity\Editor;

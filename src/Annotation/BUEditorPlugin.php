@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\bueditor\Annotation\BUEditorPlugin.
- */
-
 namespace Drupal\bueditor\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
