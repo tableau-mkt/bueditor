@@ -4,6 +4,7 @@ namespace Drupal\bueditor\Plugin\Editor;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\editor\Entity\Editor;
 use Drupal\editor\Plugin\EditorBase;
 
@@ -46,7 +47,7 @@ class BUEditor extends EditorBase {
       '#title' => $this->t('BUEditor Editor'),
       '#options' => $bueditor_editors,
       '#default_value' => $settings['default_editor'],
-      '#description' => $this->t('Select the default editor for the authorized roles. Editors can be configured at <a href=":url">BUEditor admin page</a>.', array(':url' => \Drupal::url('bueditor.admin'))),
+      '#description' => $this->t('Select the default editor for the authorized roles. Editors can be configured at <a href=":url">BUEditor admin page</a>.', array(':url' => Url::fromRoute('bueditor.admin')->toString())),
       '#empty_option' => '- ' . $this->t('Select an editor') . ' -',
     );
     // Roles editors

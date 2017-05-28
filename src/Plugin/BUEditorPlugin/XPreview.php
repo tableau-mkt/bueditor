@@ -3,6 +3,7 @@
 namespace Drupal\bueditor\Plugin\BUEditorPlugin;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\editor\Entity\Editor;
 use Drupal\bueditor\BUEditorPluginBase;
 use Drupal\bueditor\Entity\BUEditorEditor;
@@ -63,7 +64,7 @@ class XPreview extends BUEditorPluginBase {
       if ($bueditor_editor->hasToolbarItem('xpreview')) {
         $ori = $bueditor_editor->isNew() ? NULL : $bueditor_editor->load($bueditor_editor->id());
         if (!$ori || !$ori->hasToolbarItem('xpreview')) {
-          $msg = $this->t('Ajax preview button has been enabled. Please check <a href="@url">the required permissions</a>.', array('@url' => \Drupal::url('user.admin_permissions')));
+          $msg = $this->t('Ajax preview button has been enabled. Please check <a href="@url">the required permissions</a>.', array('@url' => Url::fromRoute('user.admin_permissions')->toString()));
           drupal_set_message($msg);
         }
       }

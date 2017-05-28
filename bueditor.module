@@ -5,6 +5,8 @@
  * Defines Drupal hooks for BUEditor.
  */
 
+use Drupal\Core\Url;
+
 /**
  * Implements hook_js_settings_alter().
  */
@@ -16,7 +18,7 @@ function bueditor_js_settings_alter(array &$settings, \Drupal\Core\Asset\Attache
     if (!\Drupal::currentUser()->isAnonymous()) {
       $options['query']['token'] = \Drupal::csrfToken()->get('xpreview');
     }
-    $settings['xPreview']['url'] = \Drupal::url('drupal.xpreview', array(), $options);
+    $settings['xPreview']['url'] = Url::fromRoute('drupal.xpreview', array(), $options)->toString();
   }
 }
 
