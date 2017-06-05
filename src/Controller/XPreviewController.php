@@ -21,11 +21,11 @@ class XPreviewController extends ControllerBase {
     if (!$user->isAnonymous()) {
       $token = $request->query->get('token');
       if (!$token || !\Drupal::csrfToken()->validate($token, 'xpreview')) {
-        return new JsonResponse(array('output' => $this->t('Invalid security token.'), 'status' => FALSE));
+        return new JsonResponse(['output' => $this->t('Invalid security token.'), 'status' => FALSE]);
       }
     }
     // Build output
-    $data = array('output' => '', 'status' => TRUE);
+    $data = ['output' => '', 'status' => TRUE];
     // Check input
     $input = $request->request->get('input');
     if (is_string($input) && ($input = trim($input)) !== '') {
@@ -40,7 +40,7 @@ class XPreviewController extends ControllerBase {
         }
       }
       $data['usedFormat'] = $used_format;
-      $build = array('#type' => 'processed_text', '#text' => $input, '#format' => $used_format);
+      $build = ['#type' => 'processed_text', '#text' => $input, '#format' => $used_format];
       $data['output'] = '' . \Drupal::service('renderer')->renderPlain($build);
     }
     return new JsonResponse($data);

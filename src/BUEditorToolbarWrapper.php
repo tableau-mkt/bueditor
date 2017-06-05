@@ -70,7 +70,7 @@ class BUEditorToolbarWrapper {
    * Returns items that start with a string or match a regex.
    */
   public function match($str, $is_regex = FALSE) {
-    $items = array();
+    $items = [];
     if ($this->assocToolbar) {
       foreach ($this->assocToolbar as $id) {
         $found = $is_regex ? preg_match($str, $id) : strpos($id, $str) === 0;
@@ -86,7 +86,7 @@ class BUEditorToolbarWrapper {
    * Removes an item or a list of items.
    */
   public function remove($id) {
-    $ids = is_array($id) ? $id : array($id);
+    $ids = is_array($id) ? $id : [$id];
     $this->toolbar = array_diff($this->toolbar, $ids);
     foreach ($ids as $id) {
       unset($this->assocToolbar[$id]);

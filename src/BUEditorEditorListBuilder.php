@@ -37,11 +37,11 @@ class BUEditorEditorListBuilder extends ConfigEntityListBuilder {
    */
   public function getDefaultOperations(EntityInterface $bueditor_editor) {
     $operations = parent::getDefaultOperations($bueditor_editor);
-    $operations['duplicate'] = array(
+    $operations['duplicate'] = [
       'title' => t('Duplicate'),
       'weight' => 15,
       'url' => $bueditor_editor->toUrl('duplicate-form'),
-    );
+    ];
     return $operations;
   }
 

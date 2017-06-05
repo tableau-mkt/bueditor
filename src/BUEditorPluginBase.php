@@ -20,7 +20,7 @@ abstract class BUEditorPluginBase extends PluginBase implements BUEditorPluginIn
    * {@inheritdoc}
    */
   public function getButtons() {
-    return array();
+    return [];
   }
 
   /**

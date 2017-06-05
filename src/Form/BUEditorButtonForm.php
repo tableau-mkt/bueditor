@@ -18,130 +18,130 @@ class BUEditorButtonForm extends EntityForm {
     // Check duplication
     if ($this->getOperation() === 'duplicate') {
       $bueditor_button = $bueditor_button->createDuplicate();
-      $bueditor_button->set('label', $this->t('Duplicate of @label', array('@label' => $bueditor_button->label())));
+      $bueditor_button->set('label', $this->t('Duplicate of @label', ['@label' => $bueditor_button->label()]));
       $this->setEntity($bueditor_button);
     }
     // Label
-    $form['label'] = array(
+    $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Name'),
       '#default_value' => $bueditor_button->label(),
       '#maxlength' => 64,
       '#required' => TRUE,
-    );
+   ];
     // Id
     $id = $bueditor_button->id();
-    $form['id'] = array(
+    $form['id'] = [
       '#type' => 'machine_name',
-      '#machine_name' => array(
-        'exists' => array(get_class($bueditor_button), 'load'),
-        'source' => array('label'),
-      ),
+      '#machine_name' => [
+        'exists' => [get_class($bueditor_button), 'load'],
+        'source' => ['label'],
+      ],
       '#default_value' => $id && strpos($id, 'custom_') === 0 ? substr($id, 7) : $id,
       '#maxlength' => 32,
       '#required' => TRUE,
       '#field_prefix' => 'custom_',
-    );
+    ];
     // Template button
     $code = $bueditor_button->get('code');
     $template = $bueditor_button->get('template');
     $js_info = $this->t('If the code starts with <code>js:</code> it is executed as javascript inside <code>function(E, $){...}</code> where <code>E</code> is the editor instance, and <code>$</code> is JQuery. Ex: <code>js: console.log(this, E, $);</code>');
-    $template_checked = array(':input[name="is_template"]' => array('checked' => TRUE));
-    $template_unchecked = array(':input[name="is_template"]' => array('checked' => FALSE));
-    $form['is_template'] = array(
+    $template_checked = [':input[name="is_template"]' => ['checked' => TRUE]];
+    $template_unchecked = [':input[name="is_template"]' => ['checked' => FALSE]];
+    $form['is_template'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('This is a template button'),
       '#default_value' => $template && !$code,
-    );
-    $form['template_button'] = array(
+    ];
+    $form['template_button'] = [
       '#type' => 'details',
       '#title' => $this->t('Template button'),
       '#description' => $this->t('A template button is used for inserting a custom element into toolbar.'),
       '#open' => TRUE,
-      '#states' => array(
+      '#states' => [
         'visible' => $template_checked,
-      ),
-    );
+      ],
+    ];
     // Template
-    $form['template_button']['template'] = array(
+    $form['template_button']['template'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Template'),
       '#default_value' => $template,
       '#description' => $this->t('Html template that will be inserted into toolbar.') . '<br />' . $js_info,
-      '#states' => array(
+      '#states' => [
         'required' => $template_checked,
-      ),
-    );
+      ],
+    ];
     // Normal button
-    $form['button'] = array(
+    $form['button'] = [
       '#type' => 'details',
       '#title' => $this->t('Button properties'),
       '#open' => TRUE,
-      '#states' => array(
+      '#states' => [
         'visible' => $template_unchecked,
-      ),
-    );
+      ],
+    ];
     // Code
-    $form['button']['code'] = array(
+    $form['button']['code'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Code'),
       '#default_value' => $code,
       '#description' => $this->t('Text to insert into editor textarea. Ex: <code>&lt;strong&gt;|&lt;/strong&gt;</code>. The vertical bar <strong>|</strong> represents the cursor position or the selected text in the textarea.') . '<br />' . $js_info,
-      '#states' => array(
+      '#states' => [
         'required' => $template_unchecked,
-      ),
-    );
+      ],
+    ];
     // Button text
-    $form['button']['text'] = array(
+    $form['button']['text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Button text'),
       '#default_value' => $bueditor_button->get('text'),
       '#description' => $this->t('A text label or html icon for the button element.'),
-    );
+    ];
     // Tooltip
-    $form['button']['tooltip'] = array(
+    $form['button']['tooltip'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Tooltip'),
       '#default_value' => $bueditor_button->get('tooltip'),
       '#description' => $this->t('Descriptive text displayed on button hover.'),
-    );
+    ];
     // Class name
-    $form['button']['cname'] = array(
+    $form['button']['cname'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Class name'),
       '#default_value' => $bueditor_button->get('cname'),
-      '#description' => $this->t('Additional class name for the button element.') . '<br />' . $this->t('Font icon class can be used as <code>ficon-NAME</code> where <code>NAME</code> is one of %names.', array('%names' => 'bold, italic, underline, strike, image, link, quote, code, ul, ol, table, template, undo, redo, preview, help')),
-    );
+      '#description' => $this->t('Additional class name for the button element.') . '<br />' . $this->t('Font icon class can be used as <code>ficon-NAME</code> where <code>NAME</code> is one of %names.', ['%names' => 'bold, italic, underline, strike, image, link, quote, code, ul, ol, table, template, undo, redo, preview, help']),
+    ];
     // Class name
-    $form['button']['shortcut'] = array(
+    $form['button']['shortcut'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Shortcut'),
       '#default_value' => $bueditor_button->get('shortcut'),
       '#description' => $this->t('Button shortcut as a combination of Modifier keys (<kbd>Ctrl</kbd>, <kbd>Alt</kbd>, <kbd>Shift</kbd>) and Alphanumeric keys(<kbd>0-9</kbd>, <kbd>A-Z</kbd>) or special keys like Back space(<kbd>BACKSPACE</kbd>), Tabulator(<kbd>TAB</kbd>), Return(<kbd>ENTER</kbd>), Escape(<kbd>ESC</kbd>), Space(<kbd>SPACE</kbd>), Arrow keys(<kbd>LEFT|RIGHT|UP|DOWN</kbd>), Function keys(<kbd>F1-F12</kbd>).') . '<br />' . $this->t('Example shortcuts: <kbd>Ctrl+M</kbd>, <kbd>Alt+Shift+5</kbd>, <kbd>Ctrl+Shift+ENTER</kbd>.') . '<br />' . $this->t('Make sure not to override default shortcuts like <kbd>Ctrl+A|C|V|X</kbd> which are critical for text editing.'),
-    );
+    ];
     // Libraries
-    $form['libraries'] = array(
+    $form['libraries'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Required libraries'),
       '#default_value' => implode(', ', $bueditor_button->get('libraries')),
       '#description' => $this->t('Comma separated list of required drupal libraries for the button. Ex: core/drupal.progress, node/drupal.node.preview'),
-    );
+    ];
     // Add demo
     if (!$bueditor_button->isNew()) {
-      $bueditor_editor = \Drupal::entityTypeManager()->getStorage('bueditor_editor')->create(array('id' => '_button_demo', 'settings' => array('toolbar' => array($bueditor_button->id()))));
+      $bueditor_editor = \Drupal::entityTypeManager()->getStorage('bueditor_editor')->create(['id' => '_button_demo', 'settings' => ['toolbar' => [$bueditor_button->id()]]]);
       $attached['library'] = $bueditor_editor->getLibraries();
       $attached['drupalSettings']['bueditor']['demoSettings'] = $bueditor_editor->getJSSettings();
-      $form['demo'] = array(
+      $form['demo'] = [
         '#type' => 'text_format',
         '#base_type' => 'textarea',
         '#title' => $this->t('Demo'),
         '#weight' => 1000,
-        '#attributes' => array('class' => array('bueditor-demo')),
+        '#attributes' => ['class' => ['bueditor-demo']],
         '#attached' => $attached,
         '#editor' => FALSE,
         '#input' => FALSE,
         '#value' => NULL,
-      );
+      ];
     }
     // Add library
     $form['#attached']['library'][] = 'bueditor/drupal.bueditor.admin';
@@ -174,11 +174,11 @@ class BUEditorButtonForm extends EntityForm {
       $form_state->setValue('template', '');
       // Check class name
       if (!empty($values['cname']) && preg_match('/[^a-zA-Z0-9\-_ ]/', $values['cname'])) {
-        $form_state->setErrorByName('cname', $this->t('@field contains invalid characters.', array('@field' => $this->t('Class name'))));
+        $form_state->setErrorByName('cname', $this->t('@field contains invalid characters.', ['@field' => $this->t('Class name')]));
       }
       // Check shortcut
       if (!empty($values['shortcut']) && preg_match('/[^a-zA-Z0-9\+]/', $values['shortcut'])) {
-        $form_state->setErrorByName('shortcut', $this->t('@field contains invalid characters.', array('@field' => $this->t('Shortcut'))));
+        $form_state->setErrorByName('shortcut', $this->t('@field contains invalid characters.', ['@field' => $this->t('Shortcut')]));
       }
     }
     // Convert libraries to array.
@@ -195,12 +195,12 @@ class BUEditorButtonForm extends EntityForm {
     $bueditor_button = $this->getEntity();
     $status = $bueditor_button->save();
     if ($status == SAVED_NEW) {
-      drupal_set_message($this->t('Button %name has been added.', array('%name' => $bueditor_button->label())));
+      drupal_set_message($this->t('Button %name has been added.', ['%name' => $bueditor_button->label()]));
     }
     elseif ($status == SAVED_UPDATED) {
       drupal_set_message($this->t('The changes have been saved.'));
     }
-    $form_state->setRedirect('entity.bueditor_button.edit_form', array('bueditor_button' => $bueditor_button->id()));
+    $form_state->setRedirect('entity.bueditor_button.edit_form', ['bueditor_button' => $bueditor_button->id()]);
   }
 
 }

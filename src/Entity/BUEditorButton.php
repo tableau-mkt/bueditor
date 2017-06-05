@@ -96,7 +96,7 @@ class BUEditorButton extends ConfigEntityBase {
    *
    * @var array
    */
-  protected $libraries = array();
+  protected $libraries = [];
 
   /**
    * {@inheritdoc}
@@ -114,8 +114,8 @@ class BUEditorButton extends ConfigEntityBase {
    * Returns an array of button properties for JS.
    */
   public function jsProperties() {
-    $props = array('id', 'label', 'tooltip', 'text', 'cname', 'shortcut', 'code', 'template');
-    $data = array();
+    $props = ['id', 'label', 'tooltip', 'text', 'cname', 'shortcut', 'code', 'template'];
+    $data = [];
     foreach ($props as $prop) {
       if ($value = $this->get($prop)) {
         $data[$prop] = $value;

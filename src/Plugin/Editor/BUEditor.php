@@ -37,21 +37,21 @@ class BUEditor extends EditorBase {
    */
   public function settingsForm(array $form, FormStateInterface $form_state, Editor $editor) {
     $settings = $editor->getSettings();
-    $bueditor_editors = array();
+    $bueditor_editors = [];
     foreach (\Drupal::entityTypeManager()->getStorage('bueditor_editor')->loadMultiple() as $bueditor_editor) {
       $bueditor_editors[$bueditor_editor->id()] = $bueditor_editor->label();
     }
     // Default editor
-    $form['default_editor'] = array(
+    $form['default_editor'] = [
       '#type' => 'select',
       '#title' => $this->t('BUEditor Editor'),
       '#options' => $bueditor_editors,
       '#default_value' => $settings['default_editor'],
-      '#description' => $this->t('Select the default editor for the authorized roles. Editors can be configured at <a href=":url">BUEditor admin page</a>.', array(':url' => Url::fromRoute('bueditor.admin')->toString())),
+      '#description' => $this->t('Select the default editor for the authorized roles. Editors can be configured at <a href=":url">BUEditor admin page</a>.', [':url' => Url::fromRoute('bueditor.admin')->toString()]),
       '#empty_option' => '- ' . $this->t('Select an editor') . ' -',
-    );
+    ];
     // Roles editors
-    $role_ids = array();
+    $role_ids = [];
     if ($format_form = $form_state->getCompleteForm()) {
       if (isset($format_form['roles']['#value'])) {
         $role_ids = $format_form['roles']['#value'];
@@ -64,19 +64,19 @@ class BUEditor extends EditorBase {
       $role_ids = array_keys(filter_get_roles_by_format($format));
     }
     if (count($role_ids) > 1) {
-      $form['roles_editors'] = array(
+      $form['roles_editors'] = [
         '#type' => 'details',
         '#title' => t('Role specific editors'),
-      );
+      ];
       $roles = user_roles();
       foreach ($role_ids as $role_id) {
-        $form['roles_editors'][$role_id] = array(
+        $form['roles_editors'][$role_id] = [
           '#type' => 'select',
-          '#title' => $this->t('Editor for %role', array('%role' => $roles[$role_id]->label())),
+          '#title' => $this->t('Editor for %role', ['%role' => $roles[$role_id]->label()]),
           '#options' => $bueditor_editors,
           '#default_value' => isset($settings['roles_editors'][$role_id]) ? $settings['roles_editors'][$role_id] : '',
           '#empty_option' => '- ' . $this->t('Use the default') . ' -',
-        );
+        ];
       }
     }
     return $form;
@@ -86,7 +86,7 @@ class BUEditor extends EditorBase {
    * {@inheritdoc}
    */
   public function settingsFormValidate(array $form, FormStateInterface $form_state) {
-    $settings = &$form_state->getValue(array('editor', 'settings'));
+    $settings = &$form_state->getValue(['editor', 'settings']);
     // Remove empty role editor pairs.
     if (isset($settings['roles_editors'])) {
       $settings['roles_editors'] = array_filter($settings['roles_editors']);
@@ -98,7 +98,7 @@ class BUEditor extends EditorBase {
    */
   public function getLibraries(Editor $editor) {
     $bueditor_editor = $this->getBUEditorEditor($editor);
-    return $bueditor_editor ? $bueditor_editor->getLibraries($editor) : array();
+    return $bueditor_editor ? $bueditor_editor->getLibraries($editor) : [];
   }
 
   /**
@@ -106,7 +106,7 @@ class BUEditor extends EditorBase {
    */
   public function getJSSettings(Editor $editor) {
     $bueditor_editor = $this->getBUEditorEditor($editor);
-    return $bueditor_editor ? $bueditor_editor->getJSSettings($editor) : array();
+    return $bueditor_editor ? $bueditor_editor->getJSSettings($editor) : [];
   }
 
   /**

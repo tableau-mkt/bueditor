@@ -21,7 +21,7 @@ class BUEditorSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return array('bueditor.settings');
+    return ['bueditor.settings'];
   }
 
   /**
@@ -29,12 +29,12 @@ class BUEditorSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('bueditor.settings');
-    $form['devmode'] = array(
+    $form['devmode'] = [
       '#type' => 'checkbox',
       '#title' => t('Enable development mode'),
       '#default_value' => $config->get('devmode'),
       '#description' => t('In development mode minified libraries are replaced by source libraries to make debugging easier.'),
-    );
+    ];
 
     return parent::buildForm($form, $form_state);
   }

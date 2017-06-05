@@ -16,8 +16,8 @@ class BUEditorButtonListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = array('data' => $this->t('ID'), 'class' => 'button-id');
-    $header['label'] = array('data' => $this->t('Name'), 'class' => 'button-label');
+    $header['id'] = ['data' => $this->t('ID'), 'class' => 'button-id'];
+    $header['label'] = ['data' => $this->t('Name'), 'class' => 'button-label'];
     return $header + parent::buildHeader();
   }
 
@@ -35,11 +35,11 @@ class BUEditorButtonListBuilder extends ConfigEntityListBuilder {
    */
   public function getDefaultOperations(EntityInterface $bueditor_button) {
     $operations = parent::getDefaultOperations($bueditor_button);
-    $operations['duplicate'] = array(
+    $operations['duplicate'] = [
       'title' => t('Duplicate'),
       'weight' => 15,
       'url' => $bueditor_button->toUrl('duplicate-form'),
-    );
+    ];
     return $operations;
   }
 

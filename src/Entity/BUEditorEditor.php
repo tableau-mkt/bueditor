@@ -61,7 +61,7 @@ class BUEditorEditor extends ConfigEntityBase {
    *
    * @var array
    */
-  protected $settings = array();
+  protected $settings = [];
 
   /**
    * Javascript data including settings and libraries.
@@ -92,7 +92,7 @@ class BUEditorEditor extends ConfigEntityBase {
    * Returns the toolbar array.
    */
   public function getToolbar() {
-    return $this->getSettings('toolbar', array());
+    return $this->getSettings('toolbar', []);
   }
 
   /**
@@ -123,10 +123,10 @@ class BUEditorEditor extends ConfigEntityBase {
    */
   public function getJS(Editor $editor = NULL) {
     if (!isset($this->js)) {
-      $this->js = array(
-        'libraries' => array('bueditor/drupal.bueditor'),
-        'settings' => array_filter($this->getSettings()) + array('toolbar' => array()),
-      );
+      $this->js = [
+        'libraries' => ['bueditor/drupal.bueditor'],
+        'settings' => array_filter($this->getSettings()) + ['toolbar' => []],
+      ];
       \Drupal::service('plugin.manager.bueditor.plugin')->alterEditorJS($this->js, $this, $editor);
     }
     return $this->js;

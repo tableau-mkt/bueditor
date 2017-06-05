@@ -15,7 +15,7 @@ class BUEditorButtonDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Are you sure you want to delete the button %name?', array('%name' => $this->entity->label()));
+    return $this->t('Are you sure you want to delete the button %name?', ['%name' => $this->entity->label()]);
   }
 
   /**
@@ -37,7 +37,7 @@ class BUEditorButtonDeleteForm extends EntityConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->entity->delete();
-    drupal_set_message($this->t('Button %name has been deleted.', array('%name' => $this->entity->label())));
+    drupal_set_message($this->t('Button %name has been deleted.', ['%name' => $this->entity->label()]));
     $form_state->setRedirectUrl($this->getCancelUrl());
   }
 

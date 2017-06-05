@@ -23,9 +23,9 @@ class XPreview extends BUEditorPluginBase {
    * {@inheritdoc}
    */
   public function getButtons() {
-    return array(
+    return [
       'xpreview' => $this->t('Preview'),
-    );
+    ];
   }
 
   /**
@@ -64,7 +64,7 @@ class XPreview extends BUEditorPluginBase {
       if ($bueditor_editor->hasToolbarItem('xpreview')) {
         $ori = $bueditor_editor->isNew() ? NULL : $bueditor_editor->load($bueditor_editor->id());
         if (!$ori || !$ori->hasToolbarItem('xpreview')) {
-          $msg = $this->t('Ajax preview button has been enabled. Please check <a href="@url">the required permissions</a>.', array('@url' => Url::fromRoute('user.admin_permissions')->toString()));
+          $msg = $this->t('Ajax preview button has been enabled. Please check <a href="@url">the required permissions</a>.', ['@url' => Url::fromRoute('user.admin_permissions')->toString()]);
           drupal_set_message($msg);
         }
       }

@@ -24,7 +24,7 @@ class Core extends BUEditorPluginBase {
    */
   public function getButtons() {
     // Buttons in core library
-    $buttons = array(
+    $buttons = [
       '-' => $this->t('Separator'),
       '/' => $this->t('New line'),
       'bold' => $this->t('Bold'),
@@ -39,9 +39,9 @@ class Core extends BUEditorPluginBase {
       'image' => $this->t('Image'),
       'undo' => $this->t('Undo'),
       'redo' => $this->t('Redo'),
-    );
+    ];
     for ($i = 1; $i < 7; $i++) {
-      $buttons['h' . $i] = $this->t('Heading @n', array('@n' => $i));
+      $buttons['h' . $i] = $this->t('Heading @n', ['@n' => $i]);
     }
     return $buttons;
   }

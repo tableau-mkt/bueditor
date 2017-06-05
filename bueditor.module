@@ -14,11 +14,11 @@ function bueditor_js_settings_alter(array &$settings, \Drupal\Core\Asset\Attache
   // XPreview library requires a tokenized URL.
   $libraries = \Drupal::service('library.dependency_resolver')->getLibrariesWithDependencies($assets->getLibraries());
   if (in_array('bueditor/drupal.xpreview', $libraries)) {
-    $options = array();
+    $options = [];
     if (!\Drupal::currentUser()->isAnonymous()) {
       $options['query']['token'] = \Drupal::csrfToken()->get('xpreview');
     }
-    $settings['xPreview']['url'] = Url::fromRoute('drupal.xpreview', array(), $options)->toString();
+    $settings['xPreview']['url'] = Url::fromRoute('drupal.xpreview', [], $options)->toString();
   }
 }
 

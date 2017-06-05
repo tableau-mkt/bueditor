@@ -18,117 +18,117 @@ class BUEditorEditorForm extends EntityForm {
     // Check duplication
     if ($this->getOperation() === 'duplicate') {
       $bueditor_editor = $bueditor_editor->createDuplicate();
-      $bueditor_editor->set('label', $this->t('Duplicate of @label', array('@label' => $bueditor_editor->label())));
+      $bueditor_editor->set('label', $this->t('Duplicate of @label', ['@label' => $bueditor_editor->label()]));
       $this->setEntity($bueditor_editor);
     }
     // Label
-    $form['label'] = array(
+    $form['label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Name'),
       '#default_value' => $bueditor_editor->label(),
       '#maxlength' => 64,
       '#required' => TRUE,
       '#weight' => -20,
-    );
+    ];
     // Id
-    $form['id'] = array(
+    $form['id'] = [
       '#type' => 'machine_name',
-      '#machine_name' => array(
-        'exists' => array(get_class($bueditor_editor), 'load'),
-        'source' => array('label'),
-      ),
+      '#machine_name' => [
+        'exists' => [get_class($bueditor_editor), 'load'],
+        'source' => ['label'],
+      ],
       '#default_value' => $bueditor_editor->id(),
       '#maxlength' => 32,
       '#required' => TRUE,
       '#weight' => -20,
-    );
+    ];
     // Description
-    $form['description'] = array(
+    $form['description'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Description'),
       '#default_value' => $bueditor_editor->get('description'),
       '#weight' => -10,
-    );
+    ];
     // Toolbar
     $widget = $this->getToolbarWidget();
     $widget_libraries = $widget['libraries'];
     unset($widget['libraries']);
-    $form['toolbar_config'] = array(
+    $form['toolbar_config'] = [
       '#type' => 'details',
       '#open' => TRUE,
       '#title' => $this->t('Toolbar configuration'),
-      '#attached' => array(
+      '#attached' => [
         'library' => $widget_libraries,
-        'drupalSettings' => array('bueditor' => array('twSettings' => $widget)),
-      ),
+        'drupalSettings' => ['bueditor' => ['twSettings' => $widget]],
+      ],
       '#weight' => -6,
-    );
-    $form['toolbar_config']['toolbar'] = array(
+    ];
+    $form['toolbar_config']['toolbar'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Active toolbar'),
       '#default_value' => implode(', ', $bueditor_editor->getToolbar()),
-      '#attributes' => array(
-        'class' => array('bueditor-toolbar-input'),
-      ),
+      '#attributes' => [
+        'class' => ['bueditor-toolbar-input'],
+      ],
       '#maxlength' => NULL,
-      '#parents' => array('settings', 'toolbar'),
-    );
+      '#parents' => ['settings', 'toolbar'],
+    ];
     // Settings
-    $form['settings'] = array(
+    $form['settings'] = [
       '#tree' => TRUE,
       '#type' => 'details',
       '#title' => $this->t('Settings'),
       '#weight' => -5,
-    );
+    ];
     // Class name
-    $form['settings']['cname'] = array(
+    $form['settings']['cname'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Class name'),
       '#default_value' => $bueditor_editor->getSettings('cname'),
       '#description' => $this->t('Additional class name for the editor element.'),
       '#weight' => -8,
-    );
+    ];
     // Indentation
-    $form['settings']['indent'] = array(
+    $form['settings']['indent'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable indentation'),
       '#default_value' => $bueditor_editor->getSettings('indent'),
       '#description' => $this->t('Enable 2 spaces indent by <kbd>TAB</kbd>, unindent by <kbd>Shift+TAB</kbd>, and auto-indent by <kbd>ENTER</kbd>. Once enabled it can be turned on/off dynamically by <kbd>Ctrl+Alt+TAB</kbd>.'),
       '#weight' => -7,
-    );
+    ];
     // Autocomplete HTML tags
-    $form['settings']['acTags'] = array(
+    $form['settings']['acTags'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Autocomplete HTML tags'),
       '#default_value' => $bueditor_editor->getSettings('acTags'),
       '#description' => $this->t('Automatically insert html closing tags.'),
       '#weight' => -6,
-    );
+    ];
     // File Browser
-    $form['settings']['fileBrowser'] = array(
+    $form['settings']['fileBrowser'] = [
       '#type' => 'select',
       '#title' => $this->t('File browser'),
-      '#options' => array(),
+      '#options' => [],
       '#empty_value' => '',
       '#default_value' => $bueditor_editor->getSettings('fileBrowser'),
       '#description' => $this->t('File browser to use in default image/link dialogs.'),
       '#weight' => -5,
-    );
+    ];
     // Add demo
     if (!$bueditor_editor->isNew()) {
       $attached['library'] = $bueditor_editor->getLibraries();
       $attached['drupalSettings']['bueditor']['demoSettings'] = $bueditor_editor->getJSSettings();
-      $form['demo'] = array(
+      $form['demo'] = [
         '#type' => 'text_format',
         '#base_type' => 'textarea',
         '#title' => $this->t('Demo'),
         '#weight' => 1000,
-        '#attributes' => array('class' => array('bueditor-demo')),
+        '#attributes' => ['class' => ['bueditor-demo']],
         '#attached' => $attached,
         '#editor' => FALSE,
         '#input' => FALSE,
         '#value' => NULL,
-      );
+      ];
     }
     // Add admin library
     $form['#attached']['library'][] = 'bueditor/drupal.bueditor.admin';
@@ -143,7 +143,7 @@ class BUEditorEditorForm extends EntityForm {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form, $form_state);
     $bueditor_editor = $this->getEntity();
-    $toolbar = &$form_state->getValue(array('settings', 'toolbar'));
+    $toolbar = &$form_state->getValue(['settings', 'toolbar']);
     // Convert toolbar to array.
     if (is_string($toolbar)) {
       $toolbar = array_values(array_filter(array_map('trim', explode(',', $toolbar))));
@@ -153,7 +153,7 @@ class BUEditorEditorForm extends EntityForm {
       $bueditor_editor->setToolbar($toolbar);
     }
     // Check class name
-    $cname = $form_state->getValue(array('settings', 'cname'));
+    $cname = $form_state->getValue(['settings', 'cname']);
     if (!empty($cname) && preg_match('/[^a-zA-Z0-9\-_ ]/', $cname)) {
       $form_state->setError($form['settings']['cname'], $this->t('Class name is invalid.'));
     }
@@ -167,12 +167,12 @@ class BUEditorEditorForm extends EntityForm {
     $bueditor_editor = $this->getEntity();
     $status = $bueditor_editor->save();
     if ($status == SAVED_NEW) {
-      drupal_set_message($this->t('Editor %name has been added.', array('%name' => $bueditor_editor->label())));
+      drupal_set_message($this->t('Editor %name has been added.', ['%name' => $bueditor_editor->label()]));
     }
     elseif ($status == SAVED_UPDATED) {
       drupal_set_message($this->t('The changes have been saved.'));
     }
-    $form_state->setRedirect('entity.bueditor_editor.edit_form', array('bueditor_editor' => $bueditor_editor->id()));
+    $form_state->setRedirect('entity.bueditor_editor.edit_form', ['bueditor_editor' => $bueditor_editor->id()]);
   }
 
   /**
@@ -182,7 +182,7 @@ class BUEditorEditorForm extends EntityForm {
    */
   public static function getToolbarWidget() {
     $pm = \Drupal::service('plugin.manager.bueditor.plugin');
-    $widget = array('items' => $pm->getButtons(), 'libraries' => array('bueditor/drupal.bueditor.admin'));
+    $widget = ['items' => $pm->getButtons(), 'libraries' => ['bueditor/drupal.bueditor.admin']];
     $pm->alterToolbarWidget($widget);
     return $widget;
   }

@@ -56,7 +56,7 @@ class BUEditorPluginManager extends DefaultPluginManager {
   protected function findDefinitions() {
     $definitions = parent::findDefinitions();
     // Sort definitions by weight
-    uasort($definitions, array('Drupal\Component\Utility\SortArray', 'sortByWeightElement'));
+    uasort($definitions, ['Drupal\Component\Utility\SortArray', 'sortByWeightElement']);
     return $definitions;
   }
 
@@ -77,7 +77,7 @@ class BUEditorPluginManager extends DefaultPluginManager {
    */
   public function getInstances() {
     if (!isset($this->instances)) {
-      $this->instances = array();
+      $this->instances = [];
       foreach ($this->getDefinitions() as $id => $def) {
         $this->instances[$id] = $this->createInstance($id);
       }
@@ -105,7 +105,7 @@ class BUEditorPluginManager extends DefaultPluginManager {
    *   An array of results keyed by plugin id.
    */
   public function invokeAll($hook, &$a = NULL, $b = NULL, $c = NULL) {
-    $ret = array();
+    $ret = [];
     if (in_array($hook, $this->getHooks())) {
       foreach ($this->getInstances() as $plugin => $instance) {
         $ret[$plugin] = $instance->$hook($a, $b, $c);
@@ -121,7 +121,7 @@ class BUEditorPluginManager extends DefaultPluginManager {
    *   An array of button definitions keyed by button ids.
    */
   public function getButtons() {
-    $buttons = array();
+    $buttons = [];
     foreach ($this->getButtonGroups() as $plugin => $group) {
       $buttons = array_merge($buttons, $group['buttons']);
     }
@@ -135,14 +135,14 @@ class BUEditorPluginManager extends DefaultPluginManager {
    *   An array of button lists keyed by plugin id.
    */
   public function getButtonGroups() {
-    $plugin_buttons = array();
+    $plugin_buttons = [];
     $definitions = $this->getDefinitions();
     foreach ($this->invokeAll('getButtons') as $plugin => $buttons) {
       if ($buttons) {
         foreach ($buttons as $bid => $label) {
-          $buttons[$bid] = (is_array($label) ? $label : array('label' => $label)) + array('id' => $bid);
+          $buttons[$bid] = (is_array($label) ? $label : ['label' => $label]) + ['id' => $bid];
         }
-        $plugin_buttons[$plugin] = array('label' => $definitions[$plugin]['label'], 'buttons' => $buttons);
+        $plugin_buttons[$plugin] = ['label' => $definitions[$plugin]['label'], 'buttons' => $buttons];
       }
     }
     return $plugin_buttons;
