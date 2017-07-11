@@ -70,27 +70,23 @@ Editor.createDialog = function(name, title, content, opt) {
  * Creates and opens a tag dialog.
  */
 Editor.tagDialog = function(tag, fields, opt) {
-  var Popup = this.getTagDialog(tag) || this.createTagDialog(tag, fields, opt);
-  return Popup.open();
+  if (!opt || !opt.ignoreSelection) {
+    this.populateTagFields(tag, fields);
+  }
+  return this.createTagDialog(tag, fields, opt).open();
 };
 
 /**
  * Creates a tag dialog.
  */
 Editor.createTagDialog = function(tag, fields, opt) {
-  var name, Popup, title, content;
   // Allow opt to be the title.
   opt = typeof opt === 'string' ? {title: opt} : opt || {};
   // Prepare dialog name. Allow a custom name(for multiple dialogs of the same tag)
-  name = opt.name || tag + '-tag-dialog';
-  if (Popup = this.getPopup(name)) {
-    return Popup;
-  }
-  // Create the form and the dialog
-  title = opt.title || BUE.t('Tag editor - @tag', {'@tag': tag.toUpperCase()});
-  content = BUE.createTagForm(tag, fields, opt);
-  Popup = this.createDialog(name, title, content, {tag: tag});
-  Popup.bind('open', BUE.tagDialogOnOpen);
+  var name = opt.name || tag + '-tag-dialog';
+  var Popup = this.getPopup(name) || this.createDialog(name, null, null, {tag: tag});
+  Popup.setTitle(opt.title || BUE.t('Tag editor - @tag', {'@tag': tag.toUpperCase()}));
+  Popup.setContent(BUE.createTagForm(tag, fields, opt));
   return Popup;
 };
 
@@ -133,28 +129,29 @@ Editor.defaultPopupPosition = function(Popup) {
 };
 
 /**
- * Open handler of tag dialog.
+ * Populates tag fields by the current selection.
  */
-BUE.tagDialogOnOpen = function(Popup) {
-  var i, el, selection, htmlObj, values, form = Popup.getForm();    
-  // Reset the fields to initial values.
-  form.reset();
-  // Populate fields using the current selection.
-  if (selection = Popup.Editor.getSelection()) {
-    if (htmlObj = BUE.parseHtml(selection, Popup.tag)) {
+Editor.populateTagFields = function(tag, fields) {
+  BUE.populateTagFieldsBySelection(tag, fields, this.getSelection());
+};
+
+/**
+ * Populates tag fields by the given selection.
+ */
+BUE.populateTagFieldsBySelection = function(tag, fields, selection) {
+  if (selection) {
+    var values = {html: selection};
+    var htmlObj = BUE.parseHtml(selection, tag);
+    if (htmlObj) {
       values = htmlObj.attributes;
       values.html = htmlObj.html || '';
     }
-    else {
-      values = {html: selection};
-    }
-    for (i in values) {
-      if (el = form.elements[i]) {
-        el.value = values[i];
+    for (var field, i = 0; field = fields[i]; i++) {
+      if (values[field.name] != null) {
+        field.value = values[field.name];
       }
     }
   }
 };
-
 
 })(jQuery, BUE, BUE.Editor.prototype);

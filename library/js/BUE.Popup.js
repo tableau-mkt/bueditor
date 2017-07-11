@@ -100,8 +100,8 @@ Popup.createEl = function() {
  * Opens the popup.
  */
 Popup.open = function(pos) {
-  if (!this.on) {
-    var E, form, Popup = this, el = Popup.el;
+  var E, form, Popup = this, el = Popup.el;
+  if (!Popup.on) {
     // Add to DOM if not added yet
     if (!el.parentElement) {
       document.body.appendChild(el);
