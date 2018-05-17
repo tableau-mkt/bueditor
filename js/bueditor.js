@@ -21,6 +21,9 @@ if (Drupal.editors) Drupal.editors.bueditor = {
     }
   },
   detach: function (element, format, trigger) {
+    if (trigger === 'serialize') {
+      return BUE.editorOf(element);
+    }
     return BUE.detach(element);
   },
   onChange: function (element, callback) {
