@@ -133,6 +133,20 @@ BUE.createTagForm = function(tag, fields, opt) {
 };
 
 /**
+ * Creates a token form.
+ */
+BUE.createTokenForm = function(token, fields, opt) {
+  // Prepare options
+  opt = BUE.extend({token: token}, opt);
+  opt.attributes = BUE.extendAttr({'class': 'bue-token-form', 'data-token': token}, opt.attributes);
+  opt.tokenSubmit = opt.submit;
+  opt.submit = BUE.submitTokenForm;
+  // Prepare fields
+  fields = $.map(fields, BUE.processTokenField);
+  return BUE.createDialogForm(fields, opt);
+};
+
+/**
  * Submits a tag form.
  */
 BUE.submitTagForm = function(form, Popup, E) {
@@ -143,6 +157,19 @@ BUE.submitTagForm = function(form, Popup, E) {
   }
   // Default submit
   E.insertHtmlObj(htmlObj);
+};
+
+/**
+ * Submits a token form.
+ */
+BUE.submitTokenForm = function(form, Popup, E) {
+  var tokenSubmit, tokenObj = BUE.tokenFormToTokenObj(form);
+  // Custom submit
+  if (tokenSubmit = this.tokenSubmit) {
+    return tokenSubmit.call(this, tokenObj, Popup, E);
+  }
+  // Default submit
+  E.insertTokenObj(tokenObj);
 };
 
 /**
@@ -167,9 +194,42 @@ BUE.tagFormToHtmlObj = function(form) {
 };
 
 /**
+ * Builds and returns token object derived from field values in a token form.
+ */
+BUE.tokenFormToTokenObj = function(form) {
+  var i, el, value, name, tokenObj = {token: form.getAttribute('data-token'), attributes: {}};
+  for (i = 0; el = form.elements[i]; i++) {
+    if (name = el.getAttribute('data-attr-name')) {
+      if (el.type !== 'checkbox' || el.checked) {
+        value = el.value || el.getAttribute('data-empty-value');
+        if (name === 'html') {
+          tokenObj.html = value || '';
+        }
+        else {
+          tokenObj.attributes[name] = value;
+        }
+      }
+    }
+  }
+  return tokenObj;
+};
+
+/**
  * Processes a tag editor field.
  */
 BUE.processTagField = function(field) {
+  field = BUE.processField(field);
+  // Add attribute name
+  if (field.attributes['data-attr-name'] === undefined) {
+    field.attributes['data-attr-name'] = field.name;
+  }
+  return field;
+};
+
+/**
+ * Processes a token editor field.
+ */
+BUE.processTokenField = function(field) {
   field = BUE.processField(field);
   // Add attribute name
   if (field.attributes['data-attr-name'] === undefined) {
@@ -224,7 +284,7 @@ BUE.fieldHtml = function(field) {
   var i, options, optAttr, tag = field.type, innerHTML = '', attributes = field.attributes;
   switch (tag) {
     // Select
-    case 'select': 
+    case 'select':
       if (options = field.options) {
         for (i in options) {
           optAttr = {value: i};

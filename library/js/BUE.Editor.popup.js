@@ -76,6 +76,31 @@ Editor.tagDialog = function(tag, fields, opt) {
   return this.createTagDialog(tag, fields, opt).open();
 };
 
+
+/**
+ * Creates and opens a token dialog.
+ */
+Editor.tokenDialog = function(token, fields, opt) {
+  if (!opt || !opt.ignoreSelection) {
+    this.populateTagFields(token, fields);
+  }
+  return this.createTokenDialog(token, fields, opt).open();
+};
+
+/**
+ * Creates a token dialog.
+ */
+Editor.createTokenDialog = function(token, fields, opt) {
+  // Allow opt to be the title.
+  opt = typeof opt === 'string' ? {title: opt} : opt || {};
+  // Prepare dialog name. Allow a custom name(for multiple dialogs of the same tag)
+  var name = opt.name || token + '-token-dialog';
+  var Popup = this.getPopup(name) || this.createDialog(name, null, null, {token: token});
+  Popup.setTitle(opt.title || BUE.t('Token editor - @token', {'@token': token.toUpperCase()}));
+  Popup.setContent(BUE.createTokenForm(token, fields, opt));
+  return Popup;
+};
+
 /**
  * Creates a tag dialog.
  */

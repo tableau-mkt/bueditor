@@ -265,6 +265,13 @@ Editor.insertHtmlObj = function(htmlObj, collapse, toggle) {
   return this.setSelection(BUE.html(htmlObj), collapse);
 };
 
+/**
+ * Inserts a token object extending the current selection.
+ */
+Editor.insertTokenObj = function(tokenObj, collapse, toggle) {
+  // Insert token
+  return this.setSelection(BUE.token(tokenObj), collapse);
+};
 
 
 
