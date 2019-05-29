@@ -24,7 +24,7 @@
    * Previews editor content asynchronously.
    */
   var bueViews = BUE.views = function(E) {
-    E.tokenDialog('views', [
+    E.tokenDialog('view', [
       {name: 'view', title: BUE.t('View id'), required: true},
       {name: 'display', title: BUE.t('Display id'), required: true},
       {name: 'args', title: BUE.t('Args'), required: true}
