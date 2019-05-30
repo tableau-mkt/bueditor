@@ -85,3 +85,10 @@ drupal.bueditor.xpreview:
   dependencies:
     - bueditor/drupal.xpreview
     - bueditor/drupal.bueditor
+
+drupal.bueditor.drupalviews:
+  version: VERSION
+  js:
+    js/bueditor.drupalviews.js: {}
+  dependencies:
+    - bueditor/drupal.bueditor

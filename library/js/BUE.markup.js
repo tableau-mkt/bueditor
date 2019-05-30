@@ -41,6 +41,39 @@ BUE.html = function(tag, innerHTML, attributes) {
 };
 
 /**
+ * Builds token string from an token object or from the given token arguments
+ */
+BUE.token = function(token) {
+  var i, attr, attributes, tokenString, firstAttr;
+  // Check token object
+  if (typeof token === 'object') {
+    attributes = token.attributes;
+    token = token.token;
+  }
+
+  tokenString = '[' + token + ':';
+  firstAttr = true;
+  if (attributes) {
+    for (i in attributes) {
+      attr = attributes[i];
+
+      if (!firstAttr){
+        tokenString += '=';
+      }
+      if (firstAttr) {
+        firstAttr = false;
+      }
+
+      if (attr != null) {
+        tokenString += ('' + attr).replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+    }
+  }
+  tokenString += ']';
+  return tokenString;
+};
+
+/**
  * Checks if a tag is self closing.
  */
 BUE.selfClosing = function (tag) {
