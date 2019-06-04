@@ -92,3 +92,9 @@ drupal.bueditor.drupalviews:
     js/bueditor.drupalviews.js: {}
   dependencies:
     - bueditor/drupal.bueditor
+drupal.bueditor.insertblock:
+  version: VERSION
+  js:
+    js/bueditor.insertblock.js: {}
+  dependencies:
+    - bueditor/drupal.bueditor
